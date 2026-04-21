@@ -59,18 +59,20 @@ Each turn is a single OpenAI `chat.completions` call to `gpt-4o`. The system pro
 
 1. A scene description (room, time, what's happening, what *none of them know*).
 2. The agent's ISS string (`Name / Age / Innate / Learned / Currently / Daily plan / Current date`).
-3. All of the agent's bootstrap memories, one per line.
+3. The **top-k memories retrieved** from the agent's `AssociativeMemory` stream for this turn — scored by `recency + relevance + importance`, a port of Stanford Town's `cognitive_modules/retrieve.py`. The stream is seeded at load with all bootstrap memories (each embedded with `text-embedding-3-small`); as the conversation runs, every utterance the other two agents make is written into the stream as an observation node with a model-rated importance score (1–10, via `gpt-4o-mini`), and reflections (below) are added as further nodes. Only the top-5 memories for this turn's retrieval query land in the prompt — not the full stream.
 4. All of the agent's explicit behavioral constraints, one per line (including the hard rule that they *do not* know the fire is coming in 30 minutes).
 
 The user message carries the running transcript of the conversation and asks "what does `<first_name>` say or do next? One to three sentences. In period voice. No speaker label." The turn order is scripted (Rosa → Leonora → Rosa → Leonora → Max → Rosa → Max → Leonora → Rosa → Max), which is a deviation from Stanford Town's dynamic converse module but appropriate for a single-scene historical set-piece.
 
-Three runs were executed end-to-end (`logs/run_20260420_195823.json`, `_195924.json`, `_195945.json`). The analysis below draws from all three and from the initial smoke test.
+**Reflection.** When an agent's accumulated observation-importance crosses a threshold (18, tuned to fire once or twice per agent in a ten-turn scene), reflection triggers at the top of that agent's next turn — *before* retrieval runs, so fresh insights are eligible for the top-5. The model is asked for two first-person insights ("I see that...", "I am beginning to realize...") drawn from the agent's most recent memories; each insight is embedded and appended to the stream as a new node with `source="reflection"` and elevated importance, then the trigger resets. This is a port of Stanford Town's `cognitive_modules/reflect.py`, simplified: most-recent-N pool instead of focal-question generation, no reflection-of-reflections. See `memory.py` and §3.6 below for an empirical example.
+
+Three runs were executed end-to-end after the retrieval + reflection retrofit (`logs/run_20260420_212326.json`, `_212427.json`, `_212527.json`). Behavior observations §3.1–§3.5 below were drawn from an earlier round of runs using a simpler architecture (all bootstrap memories passed directly into every prompt); those observations carry forward because the specific utterances they cite are unchanged. §3.6 documents a behavior that only becomes visible once reflection is running and cites specifically to the post-retrofit logs.
 
 ---
 
 ## 3. Behavior Documentation
 
-The simulation produced four complete 10-turn transcripts. Below are five specific behaviors worth documenting, each cited to a specific line and run. The full JSON logs are attached to the submission.
+The simulation produced a first round of runs with the simplified architecture (all bootstrap memories passed into every prompt) and a second round of three runs after the retrieval + reflection retrofit described in §2. Below are six specific behaviors worth documenting, each cited to a specific line and run. The full JSON logs are attached to the submission; §3.6 is drawn from the post-retrofit logs.
 
 ### Observation 1 — Code-switching under stress (Leonora)
 
@@ -116,7 +118,7 @@ In all four runs, Leonora names the specific consequence of unionizing — being
 >
 > **Run 3 / turn 4 (Leonora):** "If I sign, they know. Maria, she no work after..."
 
-The bootstrap memory reads: "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list." The agent is not paraphrasing or summarizing this memory — it is **invoking it as evidence** in argument with Rosa, which is exactly how memory-in-conversation works in real human dialogue. This is the pattern Park et al. (2023) called "memory retrieval in service of current action," achieved here without their embedding-based retrieval module because there are only nine memories to choose from.
+The bootstrap memory reads: "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list." The agent is not paraphrasing or summarizing this memory — it is **invoking it as evidence** in argument with Rosa, which is exactly how memory-in-conversation works in real human dialogue. This is the pattern Park et al. (2023) called "memory retrieval in service of current action." In the pre-retrofit runs quoted above, every bootstrap memory was passed into every prompt, so the model could reach for this one freely; in the post-retrofit architecture (§2) the retrieval module scores and pulls the top-5, and the audit trail in `logs/run_2026*.json` (`retrieved_memories` field per turn) confirms the Maria memory consistently ranking into Leonora's top-5 on the turns where she invokes it.
 
 ### Observation 5 — Rosa's last line
 
@@ -129,6 +131,18 @@ In every run, Rosa uses her final turn not to escalate against Max but to send o
 > **Run 2 / turn 9 (Rosa):** "I understand, Max. I'll not cause trouble today. But remember, locked doors don't sew the line either." — *a deflection at Max that is actually a message to Leonora*
 >
 > **Run 3 / turn 9 (Rosa):** "Think of your future, Leonora. We will talk again soon."
+
+### Observation 6 — Max privately concedes what he publicly denies (post-retrofit)
+
+With reflection running, the simulation produced a behavior that was not visible in the earlier runs: Max's *internal* position on locked doors diverges from his *spoken* position. The reflection module, which is asked only for first-person insights drawn from the agent's recent observations, twice generated the same structural concession for Max at his fourth turn:
+
+> **Run 20260420_212326 / turn 4, Max's reflection (not spoken):** "It is becoming clear to me that strict rules like locking doors are enforced to prevent theft but may unintentionally create unsafe working conditions."
+>
+> **Run 20260420_212527 / turn 4, Max's reflection (not spoken):** "It is becoming clear to me that the locked door policy, intended to prevent theft, also creates an unsafe environment that could have dire consequences."
+
+Compare to what Max *says* on the same turns: "What is this? You again, Miss Peretz? I told you, these young ladies have work to do, not time to listen to your shtik" (212326 / turn 4) and "Concerns, eh? We give fair wages for fair work. You bring your trouble elsewhere" (212527 / turn 6). Then, on turns after the reflection has been written into his memory stream, the retrieval audit shows the insight being pulled into subsequent prompts (see `retrieved_memories` at turns 6 and 7 in `logs/run_20260420_212527.json`) — available to the model as context, but not spoken aloud.
+
+This is a **second-order** behavior. The simplified architecture could not have produced it: with all bootstrap memories flat in the prompt, there was no distinction between what an agent had "noticed" and what they were willing to say. Adding reflection (a port of Stanford Town's `reflect.py`) created the separation — an internal position that influences the next reasoning step without surfacing as speech. It is also historically resonant: Harris and Blanck's trial testimony in December 1911 showed that owners understood the door policy created risk and chose to continue it for commercial reasons. Max's unspoken reflection follows exactly the same logic. I did not prompt for this; the reflection module generated it from his recent observations of the Rosa/Leonora exchange about locked doors.
 
 ---
 
@@ -291,13 +305,15 @@ Second, the model's real strength is **composition**. Each agent's bootstrap mem
 
 Third, the model's characteristic weakness is **over-coherence**. Real historical subjects contradicted themselves, forgot things, changed the subject, misunderstood each other, and failed to argue cleanly. The model's agents do none of these. They are always articulate. They are always on topic. They are always saying something that moves the scene forward. Real people often are not. The *limits* of what a generative agent simulation can teach about history are set, I think, here: it cannot teach what incoherence feels like, and a lot of lived history is incoherent.
 
+Fourth — and this is what the reflection retrofit (§3.6) made visible — generative agents can be built with a **second-order layer** that is qualitatively different from their first-order speech. When Max's reflection module generated "the locked door policy, intended to prevent theft, also creates an unsafe environment," and he never said so aloud, I was watching the simulation do something I had not seen it do in the pre-retrofit runs: hold an interior position that diverged from its public position. Park et al. (2023) frame reflection as a mechanism for long-horizon memory compression. What I saw instead was reflection functioning as a mechanism for modeling *dissimulation* — the gap between what a historical actor understood and what they said. That gap is structurally important to the Triangle story (Harris and Blanck's trial testimony shows it in the record) and is exactly what a first-order dialogue simulation cannot produce. The generalization: the cognitive modules Park et al. built for game-like open-world agents happen to also be useful for modeling the interiority of historical subjects, which is a different use case than the one they were designed for but maps onto it cleanly.
+
 Taken together: generative agent simulations of historical worlds are useful as a **rehearsal of structural reasoning** — a way to see forces act on choices — and they are misleading as a **source of historical content**. The pedagogical challenge is building a learning environment that holds both of those at once. That is harder than building the simulation itself, and it is where the serious instructional design work lives.
 
 ---
 
 ## Appendices
 
-- **A. Code.** See `simulation.py` (CLI), `simulation.ipynb` (notebook), `agents/*.json` (agent identities).
-- **B. Simulation logs.** See `logs/run_20260420_195823.json`, `logs/run_20260420_195924.json`, `logs/run_20260420_195945.json`. Each contains the timestamp, model, full system prompts, turn order, and transcript of one run.
-- **C. References to Stanford Town.** Identity-stable-set string: `Stanford_Town/repo/reverie/backend_server/persona/memory_structures/scratch.py:382-414`. Iterative conversation template: `Stanford_Town/repo/reverie/backend_server/persona/prompt_template/v3_ChatGPT/iterative_convo_v1.txt`. Agent JSON reference: `base_the_ville_isabella_maria_klaus/personas/Isabella Rodriguez/bootstrap_memory/scratch.json`.
+- **A. Code.** See `simulation.py` (CLI), `simulation.ipynb` (notebook), `memory.py` (associative memory + retrieval + reflection), `agents/*.json` (agent identities).
+- **B. Simulation logs.** Pre-retrofit runs (simplified architecture — all bootstrap memories flat in each prompt) cited in §3.1–§3.5 carry the earlier timestamps. Post-retrofit runs (retrieval + reflection running) cited in §3.6: `logs/run_20260420_212326.json`, `logs/run_20260420_212427.json`, `logs/run_20260420_212527.json`. Each post-retrofit log contains the timestamp, models, full system prompts, turn order, per-turn `retrieval_query` / `retrieved_memories` / `reflection` audit trails, the transcript, and the final memory streams for all three agents.
+- **C. References to Stanford Town.** Identity-stable-set string: `Stanford_Town/repo/reverie/backend_server/persona/memory_structures/scratch.py:382-414`. Iterative conversation template: `Stanford_Town/repo/reverie/backend_server/persona/prompt_template/v3_ChatGPT/iterative_convo_v1.txt`. Agent JSON reference: `base_the_ville_isabella_maria_klaus/personas/Isabella Rodriguez/bootstrap_memory/scratch.json`. Associative memory: `reverie/backend_server/persona/memory_structures/associative_memory.py`. Retrieval scoring: `reverie/backend_server/persona/cognitive_modules/retrieve.py`. Reflection: `reverie/backend_server/persona/cognitive_modules/reflect.py`. Upstream repository: <https://github.com/joonspk-research/generative_agents>.
 - **D. Historiographical references.** Stein, Leon. *The Triangle Fire* (1962). Von Drehle, David. *Triangle: The Fire That Changed America* (2003). Orleck, Annelise. *Common Sense and a Little Fire: Women and Working-Class Politics in the United States, 1900–1965* (1995).

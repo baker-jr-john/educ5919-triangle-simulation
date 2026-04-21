@@ -4,7 +4,7 @@
 
 A three-agent generative simulation of the Triangle Shirtwaist Factory on the afternoon of **March 25, 1911** — thirty minutes before the fire that killed 146 garment workers in lower Manhattan. The goal is not to re-create the fire. It is to make visible the structural forces — economic desperation, identity and self-interest, legal permissiveness — that produced the catastrophe through many locally "rational" choices.
 
-The architecture adapts **Stanford Town** (Park et al., 2023) to the modern OpenAI API. Three LLM-powered agents converse in a fixed scene; each agent's turn is one `chat.completions` call with the agent's identity, bootstrap memories, and behavioral constraints assembled into a system prompt.
+The architecture adapts **Stanford Town** — Park et al.'s *Generative Agents: Interactive Simulacra of Human Behavior* ([joonspk-research/generative_agents](https://github.com/joonspk-research/generative_agents), [arXiv:2304.03442](https://arxiv.org/abs/2304.03442)) — to the modern OpenAI API. Three LLM-powered agents converse in a fixed scene; each agent's turn is one `chat.completions` call with the agent's identity, retrieved memories, and behavioral constraints assembled into a system prompt. The cognitive modules ported from Stanford Town are **associative memory with weighted retrieval** and **importance-triggered reflection**; everything else (hourly scheduling, pathfinding, the Phaser game world) is out of scope for a single-scene three-agent conversation.
 
 This repository is the complete submission for the EDUC_5919 course project and is published for classmates to read, reuse, and adapt for their own historical worlds.
 
@@ -460,6 +460,8 @@ You can rerun any turn offline by loading the agent JSONs, replaying the history
 ---
 
 ## Stanford Town reference map
+
+**Upstream repository:** <https://github.com/joonspk-research/generative_agents> — Park, Joon Sung, Joseph C. O'Brien, Carrie J. Cai, Meredith Ringel Morris, Percy Liang, and Michael S. Bernstein, *Generative Agents: Interactive Simulacra of Human Behavior*, UIST '23. All of this project's cognitive-module work is a port from that code.
 
 For classmates who want to trace back to the source, these are the files from Stanford Town that this project actually depends on (read, not run):
 
