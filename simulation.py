@@ -23,9 +23,15 @@ stream. On each turn, before generating the next utterance, the agent retrieves
 top-k memories scored by recency + relevance + importance, and only those go
 into the system prompt (not the full bootstrap list).
 
-See memory.py for the retrieval scoring implementation and its correspondences
-to Stanford Town's `cognitive_modules/retrieve.py` and
-`memory_structures/associative_memory.py`.
+When accumulated observation-importance crosses a threshold, the agent reflects
+at the top of their next turn: the model produces a small number of first-person
+insights from recent memories, and those insights are written back into the
+memory stream as new reflection nodes. Reflection fires *before* retrieval for
+that same turn, so fresh insights are eligible to be retrieved into the prompt.
+
+See memory.py for the retrieval + reflection implementations and their
+correspondences to Stanford Town's `cognitive_modules/retrieve.py`,
+`cognitive_modules/reflect.py`, and `memory_structures/associative_memory.py`.
 """
 
 from __future__ import annotations
@@ -205,6 +211,22 @@ def run_interaction(
         agent = agents[agent_key]
         memory = memories[agent_key]
 
+        # If enough observation-importance has accumulated since the last
+        # reflection, fire reflection BEFORE retrieval so the fresh insights
+        # are eligible to be retrieved into this same turn's system prompt.
+        reflection_log: dict | None = None
+        if memory.should_reflect():
+            new_insights = memory.reflect(current_turn=turn_num)
+            if new_insights:
+                insight_strs = [n.content for n in new_insights]
+                reflection_log = {
+                    "triggered": True,
+                    "insights": insight_strs,
+                }
+                print(f"  [{agent.first_name} reflects]")
+                for s in insight_strs:
+                    print(f"    - {s}")
+
         query = build_retrieval_query(agent, history)
         utterance, retrieved = agent_turn(
             agent, memory, history, turn_num, client
@@ -230,6 +252,7 @@ def run_interaction(
             {
                 "turn": turn_num,
                 "speaker": agent.first_name,
+                "reflection": reflection_log,
                 "retrieval_query": query,
                 "retrieved_memories": retrieved,
                 "utterance": utterance,
@@ -252,8 +275,10 @@ def save_log(
     """Write a timestamped JSON log of the run for submission and analysis.
 
     The log captures: scene, turn order, per-agent identity, per-turn retrieval
-    (query + top-k memory contents), transcript, and each agent's final memory
-    stream. Embeddings are elided to keep the file human-readable.
+    (query + top-k memory contents), per-turn reflection audit (when reflection
+    fires, the insights it produced), transcript, and each agent's final
+    memory stream (with reflection nodes visible as source="reflection").
+    Embeddings are elided to keep the file human-readable.
     """
     LOGS_DIR.mkdir(exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")

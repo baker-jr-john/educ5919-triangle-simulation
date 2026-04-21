@@ -36,7 +36,7 @@ This repository is the complete submission for the EDUC_5919 course project and 
 │
 ├── requirements.txt           — openai, jupyter
 ├── simulation.py              — CLI entry point (turn loop + scene + logging)
-├── memory.py                  — AssociativeMemory: retrieval scoring by recency + relevance + importance
+├── memory.py                  — AssociativeMemory: retrieval (recency + relevance + importance) + reflection
 ├── simulation.ipynb           — Jupyter notebook version (same logic, narrated)
 │
 ├── agents/
@@ -68,7 +68,7 @@ pip install -r requirements.txt
 
 ### 2. Get an OpenAI API key
 
-Create one at <https://platform.openai.com/api-keys>. The default models are `gpt-4o` for agent turns, `text-embedding-3-small` for memory embeddings, and `gpt-4o-mini` for scoring observation importance. A full 10-turn run costs roughly $0.10 USD.
+Create one at <https://platform.openai.com/api-keys>. The default models are `gpt-4o` for agent turns and reflection insights, `text-embedding-3-small` for memory embeddings, and `gpt-4o-mini` for scoring observation importance. A full 10-turn run costs roughly $0.15 USD.
 
 ### 3. Run the simulation
 
@@ -118,6 +118,12 @@ Each agent JSON mirrors Stanford Town's `scratch.json` layering — `innate` / `
 seed each agent's AssociativeMemory with their bootstrap_memories (all embedded)
 
 for turn_num, agent in enumerate(scripted turn order):
+    # 0. Reflect first, so fresh insights are eligible for retrieval this turn.
+    if agent.memory.should_reflect():
+        insights = agent.memory.reflect(current_turn=turn_num)
+        # each insight is embedded and appended to the stream with
+        # source="reflection" and elevated importance
+
     query = agent.currently + " " + (last two utterances heard)
     retrieved = agent.memory.retrieve(query, current_turn=turn_num, k=5)
 
@@ -136,7 +142,9 @@ for turn_num, agent in enumerate(scripted turn order):
     history.append((agent.first_name, utterance))
 
     # every other agent hears this and writes it into their own memory,
-    # with an importance score rated by gpt-4o-mini
+    # with an importance score rated by gpt-4o-mini. add_observation()
+    # decrements that agent's importance_trigger by the rated importance;
+    # when it hits 0, should_reflect() returns true on their next turn.
     for other in other_agents:
         other.memory.add_observation(f'{agent.name} said: "{utterance}"', ...)
 ```
@@ -162,6 +170,22 @@ importance = node.importance / 10
 
 Each of the three components is min-max normalized across the candidate set before weighting. Defaults mirror Stanford Town's `scratch.json` (all three weights = 1.0, recency decay = 0.995). The top-k nodes (default k=5) have their `last_accessed_turn` bumped — so memories that get retrieved frequently decay more slowly.
 
+### Reflection (`memory.py`)
+
+Observation nodes give an agent access to *what was said*. Reflection nodes give it access to *what that means*.
+
+Each `AssociativeMemory` tracks an `importance_trigger` counter initialized to `REFLECTION_THRESHOLD = 18`. Every new observation decrements the trigger by its rated importance (1–10). When the trigger hits 0, `should_reflect()` returns true, and at the top of that agent's next turn — *before* retrieval runs — `reflect()` fires:
+
+1. Pull the N most recent non-reflection nodes from the stream (default N=10).
+2. Ask `gpt-4o` for `REFLECTION_N_INSIGHTS = 2` first-person sentences ("I see that…", "I am beginning to realize…") drawn from those memories, in the agent's own voice and period.
+3. Embed each insight, append it as a new node with `source="reflection"` and `importance=8`, and reset the trigger.
+
+Because reflection fires *before* retrieval for the same turn, fresh insights are candidates for top-k scoring and can appear in the system prompt immediately. Because they live in the same stream as bootstrap + observations, they also remain available for later turns — so a reflection Rosa makes at turn 4 ("this man believes what he is saying, which means argument will not reach him") can be surfaced at turn 8 when she's deciding how to close the scene.
+
+Bootstrap nodes do **not** decrement the trigger; they represent prior life, not fresh experience. Reflection nodes are excluded from their own input pool to keep insights grounded in observations rather than recursively rewriting themselves.
+
+Threshold tuning is scene-dependent. Stanford Town uses 150 accumulated importance for multi-day runs; we use 18 so each agent reflects roughly once or twice in a ten-turn scene. Lower the threshold to see reflection more often; raise it (or set it impossibly high) to turn reflection off.
+
 ### Key functions
 
 | File / Function | Purpose |
@@ -174,13 +198,16 @@ Each of the three components is min-max normalized across the candidate set befo
 | `simulation.py :: run_interaction(agents, memories, turn_order, client)` | Orchestrate turns; after each utterance, record observations in every other agent's memory |
 | `simulation.py :: save_log(...)` | Write `logs/run_<timestamp>.json` including per-turn retrieval audit and final memory streams |
 | `memory.py :: AssociativeMemory.seed_bootstrap(list)` | Embed and insert each bootstrap memory as a node |
-| `memory.py :: AssociativeMemory.add_observation(content, speaker, turn)` | Rate importance, embed, append an observation node |
+| `memory.py :: AssociativeMemory.add_observation(content, speaker, turn)` | Rate importance, embed, append an observation node, decrement `importance_trigger` |
+| `memory.py :: AssociativeMemory.should_reflect()` | True when `importance_trigger` has crossed zero |
+| `memory.py :: AssociativeMemory.reflect(current_turn)` | Pull recent N memories, generate first-person insights with `gpt-4o`, embed + append them as `source="reflection"` nodes, reset trigger |
 | `memory.py :: AssociativeMemory.retrieve(query, current_turn, k)` | Score + sort + return top-k; bump `last_accessed_turn` |
 | `memory.py :: rate_importance(content, agent)` | One `gpt-4o-mini` call; return an integer 1–10 |
+| `memory.py :: generate_reflection_insights(agent, recent)` | One `gpt-4o` call; return first-person insight strings |
 
 ### Prompt architecture — why it's built this way
 
-The four key Stanford Town patterns we reuse are:
+The five key Stanford Town patterns we reuse are:
 
 1. **Identity stable set (ISS).** A single string containing `Name / Age / Innate traits / Learned traits / Currently / Daily plan / Current date`. See `simulation.py:get_str_iss()` and Stanford Town's `reverie/backend_server/persona/memory_structures/scratch.py:382-414`.
 
@@ -188,24 +215,27 @@ The four key Stanford Town patterns we reuse are:
 
 3. **Associative memory with weighted retrieval.** Nodes + embeddings + the `recency + relevance + importance` scoring rule from Park et al. (2023) §A.1.1. See `memory.py` and Stanford Town's `reverie/backend_server/persona/memory_structures/associative_memory.py` + `reverie/backend_server/persona/cognitive_modules/retrieve.py`.
 
-4. **Agent JSON shape.** Mirrors Stanford Town's `scratch.json` but restricted to identity fields (no pathfinding, no maze state, no hourly scheduling).
+4. **Importance-triggered reflection.** Accumulated observation-importance crosses a threshold → the agent generates high-level first-person insights from recent memories, writes them back into the stream as new retrievable nodes. See `memory.py:reflect()` and Stanford Town's `reverie/backend_server/persona/cognitive_modules/reflect.py`.
+
+5. **Agent JSON shape.** Mirrors Stanford Town's `scratch.json` but restricted to identity fields (no pathfinding, no maze state, no hourly scheduling).
 
 What we **simplified** relative to Stanford Town:
 
-- **Single-field nodes.** Stanford Town splits each node into `(subject, predicate, object) + description`; our nodes are single `content` strings. The decomposition is used by their reflect module — we don't reflect.
+- **Single-field nodes.** Stanford Town splits each node into `(subject, predicate, object) + description`; our nodes are single `content` strings. The decomposition is used by their reflect module to build a thought tree; we don't go that deep — reflection writes free-form first-person sentences.
 - **Embeddings only, no keyword fallback.** Stanford Town also scores by keyword-strength overlap as a secondary signal. We use embeddings only.
 - **Single retrieval query.** Stanford Town's `new_retrieve` takes a list of focal points and unions the results; we concatenate `currently + last two utterances` into one query.
+- **Reflection skips the focal-question step.** Stanford Town first generates 3–5 focal questions from recent memories, then retrieves per question, then synthesizes insights. We go directly from most-recent-N to insights, because for a ten-turn scene the question-generation step is overhead.
+- **No reflection-of-reflections.** Stanford Town lets reflection nodes re-enter the reflection pool, producing a thought hierarchy. We exclude them to keep insights grounded in observations.
 - **No self-observation.** The conversation history already contains each agent's own utterances, so the speaker does not add a node when they finish a turn.
 
 What we **dropped** entirely:
 
 - The Django frontend / Phaser 3 game world
-- Full `perceive` → `retrieve` → `plan` → `reflect` → `execute` pipeline (we keep only retrieve-in-service-of-converse)
-- Hourly schedule generation and action decomposition
-- Reflection (building higher-level insights from recent memories)
+- Hourly schedule generation and action decomposition (`plan.py`)
+- `perceive.py` / `execute.py` / spatial `converse.py` (replaced by scripted turn order)
 - The maze / A* pathfinding
 
-All of that infrastructure exists in Stanford Town to support a 25-agent open-world simulation running for several in-game days. For a single-scene 3-agent conversation, most of it is unnecessary — scripted turn order, one room, ten turns.
+All of that infrastructure exists in Stanford Town to support a 25-agent open-world simulation running for several in-game days. For a single-scene 3-agent conversation, most of it is unnecessary — scripted turn order, one room, ten turns. What Stanford Town's *cognitive* modules add (retrieval + reflection) is exactly what makes the conversation non-trivial, which is why we ported those and nothing else.
 
 ---
 
@@ -336,6 +366,20 @@ This phase addressed that by adding `memory.py`:
 
 The reasoning for choosing faithful retrieval over a cheaper keyword-overlap fallback: faithfulness to Stanford Town *was the point* of the retrofit.
 
+### Phase 5b — Add reflection
+
+After retrieval was working, the next piece of Stanford Town's cognitive loop worth porting was **reflection** — the mechanism by which agents synthesize recent memories into higher-level first-person insights. Without reflection, an agent has access to *what was said* but not to *what it meant*; every turn reasons over raw events only.
+
+The addition layered cleanly on top of the retrieval module. In `memory.py`:
+
+1. Each `AssociativeMemory` gained an `importance_trigger` counter. Every observation decrements it by its rated importance; when it hits zero, `should_reflect()` returns true.
+2. `reflect()` pulls the N most recent non-reflection nodes, calls `gpt-4o` with a prompt that asks for two first-person insights ("I see that…", "I am beginning to realize…") in the agent's voice and period, embeds each insight, and writes it back into the stream with `source="reflection"` and elevated importance.
+3. In `simulation.py`, reflection fires at the top of each turn *before* retrieval, so fresh insights are eligible to be pulled into that same turn's system prompt.
+
+Threshold chosen so each agent reflects roughly once or twice in a ten-turn scene (18, vs. Stanford Town's 150 for multi-day runs).
+
+Planning (the other major piece of Stanford Town's cognitive loop) was considered and intentionally skipped — it targets hourly schedules across in-game days, which the `turn_order` list already handles for a scripted single-scene conversation.
+
 ### Phase 6 — Analyze and write the report
 
 Five specific behavior observations were extracted from the logs — each cited to a run and turn number. Patterns across runs were identified (power revealed through action, Leonora defers rather than refuses, Rosa's specificity holds under interruption). The report's most important argument, in §6, is about the **limits** of the simulation as a learning tool.
@@ -368,9 +412,24 @@ Each log contains:
     {
       "turn": 0,
       "speaker": "Rosa",
+      "reflection": null,
       "retrieval_query": "Get Leonora's signature on a union card...",
       "retrieved_memories": ["I was in Union Square...", "The fire escape...", ...],
       "utterance": "Leonora, keep cutting. Don't look up..."
+    },
+    {
+      "turn": 5,
+      "speaker": "Rosa",
+      "reflection": {
+        "triggered": true,
+        "insights": [
+          "I am beginning to realize that Max's certainty is not bluster — it is belief, and it will not bend to argument.",
+          "It is becoming clear to me that Leonora hears me, but what she hears louder is the weight of her family."
+        ]
+      },
+      "retrieval_query": "...",
+      "retrieved_memories": [...],
+      "utterance": "..."
     },
     ...
   ],
@@ -383,6 +442,7 @@ Each log contains:
     "leonora": [
       { "content": "I came from Palermo...", "source": "bootstrap", "importance": 6, ... },
       { "content": "Rosa Peretz said: \"...\"", "source": "observation", "speaker": "Rosa Peretz", "importance": 7, ... },
+      { "content": "I see that this woman will not give up, even with the supervisor here...", "source": "reflection", "speaker": "Leonora Russo", "importance": 8, ... },
       ...
     ],
     "max": [...],
@@ -391,8 +451,9 @@ Each log contains:
 }
 ```
 
-- **`per_turn`** is the **retrieval audit**: for each turn, the query that was built and the top-k memory contents that were actually injected into that turn's system prompt. This lets graders verify the retrieval module did what it claims.
-- **`final_memory_streams`** is each agent's full post-scene memory: bootstrap seeds + every utterance the other two agents made during the run, each with its model-rated importance score. Embeddings are elided as `"[1536-dim vector]"` to keep the file human-readable.
+- **`per_turn.reflection`** is `null` on most turns, but when the importance trigger has fired it contains the two insight strings written back into that agent's memory stream *before* retrieval ran for the same turn. This is the reflection audit — it lets you see exactly what higher-level understanding each character drew from the confrontation, and when.
+- **`per_turn.retrieval_query` + `retrieved_memories`** is the retrieval audit: for each turn, the query that was built and the top-k memory contents that were actually injected into that turn's system prompt.
+- **`final_memory_streams`** is each agent's full post-scene memory: bootstrap seeds + observations + reflections, each with `source`, `speaker`, and importance. Embeddings are elided as `"[1536-dim vector]"` to keep the file human-readable. Filter for `"source": "reflection"` in any stream to see the insights that agent generated.
 
 You can rerun any turn offline by loading the agent JSONs, replaying the history up to turn N, and calling `agent_turn()` on the N+1 agent. No state is hidden.
 
@@ -407,9 +468,10 @@ For classmates who want to trace back to the source, these are the files from St
 - **Conversation prompt template:** `Stanford_Town/repo/reverie/backend_server/persona/prompt_template/v3_ChatGPT/iterative_convo_v1.txt`
 - **Associative memory class:** `Stanford_Town/repo/reverie/backend_server/persona/memory_structures/associative_memory.py` (node + stream + add-observation structure)
 - **Retrieval scoring:** `Stanford_Town/repo/reverie/backend_server/persona/cognitive_modules/retrieve.py` (the `recency + relevance + importance` weighted sum)
+- **Reflection:** `Stanford_Town/repo/reverie/backend_server/persona/cognitive_modules/reflect.py` (importance-trigger gating, focal-question generation, insight writing)
 - **Poignancy rating prompt:** `Stanford_Town/repo/reverie/backend_server/persona/prompt_template/run_gpt_prompt.py :: generate_poig_score()`
 
-If you want to see the rest of the cognitive loop that we **did not** port, start at `Stanford_Town/repo/reverie/backend_server/persona/persona.py` and follow `Persona.move()` through `perceive.py` → `plan.py` → `execute.py` → `converse.py` → `reflect.py`. We port `retrieve` but skip the others. Impressive, but overkill for a single-scene conversation.
+If you want to see the rest of the cognitive loop that we **did not** port, start at `Stanford_Town/repo/reverie/backend_server/persona/persona.py` and follow `Persona.move()` through `perceive.py` → `plan.py` → `execute.py` → `converse.py`. We port `retrieve` and `reflect` but skip `perceive` / `plan` / `execute` — impressive, but overkill for a single-scene conversation.
 
 ---
 

@@ -1,5 +1,5 @@
 {
-  "timestamp": "20260420_204827",
+  "timestamp": "20260420_212427",
   "model": "gpt-4o",
   "retrieval_k": 5,
   "scene_context": "It is Saturday, March 25, 1911, at 4:30 PM, in New York City.\n\nThe scene is the 9th-floor cutting room of the Triangle Shirtwaist Company, in\nthe Asch Building at the corner of Washington Place and Greene Street. The floor\nis loud with sewing machines on the 8th floor below and the hum of the cutting\ntables here. Piles of cotton shirtwaist cuttings are heaped under the tables;\nthe air is thick with lint. The Washington Place stairwell door is locked, as\nit is every shift; the Greene Street freight door is the only open exit. About\nfour hundred workers are on the floor, mostly young immigrant women. The shift\nends at 5:00 PM.\n\nLeonora Russo is at her cutting table. Rosa Peretz, an ILGWU organizer banned\nfrom the building by name, has slipped in through the freight entrance under a\nshawl. She approaches Leonora. Max Bernstein, the floor supervisor and a partial\nowner, is walking the floor and will shortly notice Rosa.\n\nNone of the three knows that in approximately thirty minutes, a scrap bin on\nthe 8th floor will ignite and the fire will spread through this building,\nkilling 146 workers. They are acting in the moment, with the knowledge and\nfears available to each of them on this ordinary late-Saturday afternoon.\n",
@@ -111,6 +111,7 @@
     {
       "turn": 0,
       "speaker": "Rosa",
+      "reflection": null,
       "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve.",
       "retrieved_memories": [
         "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
@@ -119,166 +120,199 @@
         "I worked the 9th floor at Triangle for eight months in 1908. I know where the Washington Place door is. I know it is locked during the shift. I have tried the handle.",
         "The ILGWU wants contracts with the big shops. The leaders — men — think the Italian girls and the Jewish girls will not sign. I tell them the girls will sign if someone they trust brings the card to them at their table. They do not always listen."
       ],
-      "utterance": "*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?"
+      "utterance": "*Rosa quietly approaches Leonora, keeping her voice low and her back turned to the aisle.* Excuse me, Leonora, yes? Antonia sends regards. We talked on Elizabeth Street."
     },
     {
       "turn": 1,
       "speaker": "Leonora",
-      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?",
+      "reflection": null,
+      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *Rosa quietly approaches Leonora, keeping her voice low and her back turned to the aisle.* Excuse me, Leonora, yes? Antonia sends regards. We talked on Elizabeth Street.",
       "retrieved_memories": [
-        "Rosa Peretz said: \"*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?\"",
-        "My sister Concetta is seventeen. She is still in Palermo with my mother. I have promised her I will bring her here. I count every dollar.",
-        "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list.",
+        "Rosa Peretz said: \"*Rosa quietly approaches Leonora, keeping her voice low and her back turned to the aisle.* Excuse me, Leonora, yes? Antonia sends regards. We talked on Elizabeth Street.\"",
         "There is a woman named Rosa who was at the strike. I have seen her face once in a photograph the union girls passed around. They said she is banned from our building by name.",
+        "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list.",
+        "My sister Concetta is seventeen. She is still in Palermo with my mother. I have promised her I will bring her here. I count every dollar.",
         "In the winter of 1909, there was a great strike — tens of thousands of girls walked out. My cousin Giulia was beaten in the street by men the bosses hired. The strike did not win at Triangle. The girls came back. We do not talk about it here."
       ],
-      "utterance": "*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?"
+      "utterance": "*Leonora glances nervously around, ensuring Max isn't too close.* Antonia, sì. Antonia my friend. What you want?"
     },
     {
       "turn": 2,
       "speaker": "Rosa",
-      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu? *Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?",
+      "reflection": null,
+      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *Rosa quietly approaches Leonora, keeping her voice low and her back turned to the aisle.* Excuse me, Leonora, yes? Antonia sends regards. We talked on Elizabeth Street. *Leonora glances nervously around, ensuring Max isn't too close.* Antonia, sì. Antonia my friend. What you want?",
       "retrieved_memories": [
-        "Leonora Russo said: \"*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?\"",
         "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
         "Max Bernstein was a foreman during the 1909 strike. He did not beat any girls himself, but he pointed me out to the men who did. I know his face. He knows mine. I am banned from the building by name.",
-        "The ILGWU wants contracts with the big shops. The leaders — men — think the Italian girls and the Jewish girls will not sign. I tell them the girls will sign if someone they trust brings the card to them at their table. They do not always listen.",
+        "Leonora Russo said: \"*Leonora glances nervously around, ensuring Max isn't too close.* Antonia, sì. Antonia my friend. What you want?\"",
+        "I worked the 9th floor at Triangle for eight months in 1908. I know where the Washington Place door is. I know it is locked during the shift. I have tried the handle.",
         "In November 1909, Clara Lemlich stood up at Cooper Union and called the general strike. For thirteen weeks we were in the streets. At Triangle, we did not win. The girls went back. The doors stayed locked."
       ],
-      "utterance": "*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone."
+      "utterance": "I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?"
     },
     {
       "turn": 3,
       "speaker": "Leonora",
-      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want? *Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone.",
+      "reflection": null,
+      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *Leonora glances nervously around, ensuring Max isn't too close.* Antonia, sì. Antonia my friend. What you want? I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?",
       "retrieved_memories": [
-        "Rosa Peretz said: \"*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone.\"",
-        "Rosa Peretz said: \"*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?\"",
+        "Rosa Peretz said: \"I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?\"",
+        "Rosa Peretz said: \"*Rosa quietly approaches Leonora, keeping her voice low and her back turned to the aisle.* Excuse me, Leonora, yes? Antonia sends regards. We talked on Elizabeth Street.\"",
         "There is a woman named Rosa who was at the strike. I have seen her face once in a photograph the union girls passed around. They said she is banned from our building by name.",
         "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list.",
-        "In the winter of 1909, there was a great strike — tens of thousands of girls walked out. My cousin Giulia was beaten in the street by men the bosses hired. The strike did not win at Triangle. The girls came back. We do not talk about it here."
+        "My sister Concetta is seventeen. She is still in Palermo with my mother. I have promised her I will bring her here. I count every dollar."
       ],
-      "utterance": "*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero."
+      "utterance": "*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job."
     },
     {
       "turn": 4,
       "speaker": "Max",
-      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. *Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone. *Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero.",
+      "reflection": {
+        "triggered": true,
+        "insights": [
+          "I am beginning to realize that the fear of losing work is keeping many of the girls from taking actions that might improve their conditions.",
+          "It is becoming clear to me that maintaining operational secrecy is prioritized, even at the risk of safety, reflecting the pressures to keep the factory running at any cost."
+        ]
+      },
+      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign? *Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job.",
       "retrieved_memories": [
-        "Leonora Russo said: \"*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero.\"",
-        "Rosa Peretz said: \"*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone.\"",
-        "Leonora Russo said: \"*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?\"",
-        "Rosa Peretz said: \"*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?\"",
-        "The Washington Place door is locked during shifts. Mr. Harris made that rule. Scraps of good cloth walk out of this building in the pockets of girls who smile and say please. A penny of cloth, times four hundred girls, times six days — that is a business ruined."
+        "Rosa Peretz said: \"I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?\"",
+        "Leonora Russo said: \"*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job.\"",
+        "I am beginning to realize that the fear of losing work is keeping many of the girls from taking actions that might improve their conditions.",
+        "It is becoming clear to me that maintaining operational secrecy is prioritized, even at the risk of safety, reflecting the pressures to keep the factory running at any cost.",
+        "Rosa Peretz is a troublemaker from 1909. The ILGWU sends her around with cards and speeches. She has been banned from this building by name. If she comes in, I throw her out."
       ],
-      "utterance": "*Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you!"
+      "utterance": "*Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself!"
     },
     {
       "turn": 5,
       "speaker": "Rosa",
-      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero. *Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you!",
+      "reflection": {
+        "triggered": true,
+        "insights": [
+          "I am beginning to realize that fear and financial insecurity among the workers are significant barriers to organizing, even for those who might otherwise support our efforts.",
+          "It is becoming clear to me that individuals like Max Bernstein serve as formidable obstacles to our movement, using their authority and influence to intimidate and suppress those who seek change."
+        ]
+      },
+      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job. *Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself!",
       "retrieved_memories": [
-        "Max Bernstein said: \"*Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you!\"",
-        "Leonora Russo said: \"*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?\"",
-        "Leonora Russo said: \"*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero.\"",
-        "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
-        "Max Bernstein was a foreman during the 1909 strike. He did not beat any girls himself, but he pointed me out to the men who did. I know his face. He knows mine. I am banned from the building by name."
+        "Max Bernstein said: \"*Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself!\"",
+        "Leonora Russo said: \"*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job.\"",
+        "It is becoming clear to me that individuals like Max Bernstein serve as formidable obstacles to our movement, using their authority and influence to intimidate and suppress those who seek change.",
+        "I am beginning to realize that fear and financial insecurity among the workers are significant barriers to organizing, even for those who might otherwise support our efforts.",
+        "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here."
       ],
-      "utterance": "*Turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm not here to cause trouble. Just leaving a message for Leonora, then I'm on my way. I don't want to interrupt your work more than I have to, nu?"
+      "utterance": "*Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done."
     },
     {
       "turn": 6,
       "speaker": "Max",
-      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. *Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you! *Turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm not here to cause trouble. Just leaving a message for Leonora, then I'm on my way. I don't want to interrupt your work more than I have to, nu?",
+      "reflection": null,
+      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. *Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself! *Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done.",
       "retrieved_memories": [
-        "Rosa Peretz said: \"*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone.\"",
-        "Leonora Russo said: \"*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero.\"",
-        "Leonora Russo said: \"*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?\"",
-        "Rosa Peretz said: \"*Turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm not here to cause trouble. Just leaving a message for Leonora, then I'm on my way. I don't want to interrupt your work more than I have to, nu?\"",
-        "Rosa Peretz said: \"*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?\""
+        "Rosa Peretz said: \"*Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done.\"",
+        "Rosa Peretz said: \"I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?\"",
+        "Leonora Russo said: \"*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job.\"",
+        "Rosa Peretz is a troublemaker from 1909. The ILGWU sends her around with cards and speeches. She has been banned from this building by name. If she comes in, I throw her out.",
+        "It is becoming clear to me that maintaining operational secrecy is prioritized, even at the risk of safety, reflecting the pressures to keep the factory running at any cost."
       ],
-      "utterance": "*Stands tall, crossing his arms, eyes narrowing at Rosa* A message, you say? I know your kind of message all too well. Out with you now, or I'll have no choice but to see you escorted out."
+      "utterance": "*Max gestures emphatically toward the door, his voice sharp.* You think this is a game, Rosa? Out, I said. And don't let me catch you here again!"
     },
     {
       "turn": 7,
       "speaker": "Leonora",
-      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *Turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm not here to cause trouble. Just leaving a message for Leonora, then I'm on my way. I don't want to interrupt your work more than I have to, nu? *Stands tall, crossing his arms, eyes narrowing at Rosa* A message, you say? I know your kind of message all too well. Out with you now, or I'll have no choice but to see you escorted out.",
+      "reflection": {
+        "triggered": true,
+        "insights": [
+          "I am beginning to realize that there is a deep fear of the union among the bosses and a strict enforcement of keeping its influences out.",
+          "It is becoming clear to me that many of us girls are living in a fragile situation, where both our safety concerns and our attempts to speak out are met with silence or hostility."
+        ]
+      },
+      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done. *Max gestures emphatically toward the door, his voice sharp.* You think this is a game, Rosa? Out, I said. And don't let me catch you here again!",
       "retrieved_memories": [
-        "Rosa Peretz said: \"*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone.\"",
-        "Max Bernstein said: \"*Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you!\"",
-        "Rosa Peretz said: \"*Turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm not here to cause trouble. Just leaving a message for Leonora, then I'm on my way. I don't want to interrupt your work more than I have to, nu?\"",
-        "Max Bernstein said: \"*Stands tall, crossing his arms, eyes narrowing at Rosa* A message, you say? I know your kind of message all too well. Out with you now, or I'll have no choice but to see you escorted out.\"",
-        "Rosa Peretz said: \"*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?\""
+        "Rosa Peretz said: \"I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?\"",
+        "Rosa Peretz said: \"*Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done.\"",
+        "I am beginning to realize that there is a deep fear of the union among the bosses and a strict enforcement of keeping its influences out.",
+        "Max Bernstein said: \"*Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself!\"",
+        "It is becoming clear to me that many of us girls are living in a fragile situation, where both our safety concerns and our attempts to speak out are met with silence or hostility."
       ],
-      "utterance": "*Leonora looks anxiously from Rosa to Max, then back to her work* Please, signora, you must go now. I cannot lose this. *Her voice trembles, barely audible* We will talk another time, sì?"
+      "utterance": "*Leonora keeps her eyes down, avoiding drawing any more attention to herself.* I... I must work. *She whispers to Rosa, glancing up briefly.* Per favore, go before he get more mad."
     },
     {
       "turn": 8,
       "speaker": "Rosa",
-      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *Stands tall, crossing his arms, eyes narrowing at Rosa* A message, you say? I know your kind of message all too well. Out with you now, or I'll have no choice but to see you escorted out. *Leonora looks anxiously from Rosa to Max, then back to her work* Please, signora, you must go now. I cannot lose this. *Her voice trembles, barely audible* We will talk another time, sì?",
+      "reflection": null,
+      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *Max gestures emphatically toward the door, his voice sharp.* You think this is a game, Rosa? Out, I said. And don't let me catch you here again! *Leonora keeps her eyes down, avoiding drawing any more attention to herself.* I... I must work. *She whispers to Rosa, glancing up briefly.* Per favore, go before he get more mad.",
       "retrieved_memories": [
-        "Leonora Russo said: \"*Leonora looks anxiously from Rosa to Max, then back to her work* Please, signora, you must go now. I cannot lose this. *Her voice trembles, barely audible* We will talk another time, sì?\"",
-        "Max Bernstein said: \"*Stands tall, crossing his arms, eyes narrowing at Rosa* A message, you say? I know your kind of message all too well. Out with you now, or I'll have no choice but to see you escorted out.\"",
-        "Max Bernstein said: \"*Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you!\"",
-        "Leonora Russo said: \"*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?\"",
-        "Leonora Russo said: \"*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero.\""
+        "Leonora Russo said: \"*Leonora keeps her eyes down, avoiding drawing any more attention to herself.* I... I must work. *She whispers to Rosa, glancing up briefly.* Per favore, go before he get more mad.\"",
+        "Max Bernstein said: \"*Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself!\"",
+        "Max Bernstein said: \"*Max gestures emphatically toward the door, his voice sharp.* You think this is a game, Rosa? Out, I said. And don't let me catch you here again!\"",
+        "Leonora Russo said: \"*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job.\"",
+        "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here."
       ],
-      "utterance": "*Slips a union card along the edge of the table, glancing at Leonora briefly* I understand, Leonora. We will talk again when it's safer. *Nods to Max, starting to step back* I'll be on my way now, Mr. Bernstein."
+      "utterance": "*Rosa nods slightly, slipping the union card back into her sleeve.* I understand, Leonora. Be safe. *She moves slowly toward the door, maintaining her composure.*"
     },
     {
       "turn": 9,
       "speaker": "Max",
-      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. *Leonora looks anxiously from Rosa to Max, then back to her work* Please, signora, you must go now. I cannot lose this. *Her voice trembles, barely audible* We will talk another time, sì? *Slips a union card along the edge of the table, glancing at Leonora briefly* I understand, Leonora. We will talk again when it's safer. *Nods to Max, starting to step back* I'll be on my way now, Mr. Bernstein.",
+      "reflection": {
+        "triggered": true,
+        "insights": [
+          "I am beginning to realize that the fear of speaking up or losing their jobs is a powerful tool that keeps many of the workers compliant, despite their desire for better conditions.",
+          "It is becoming clear to me that the presence of outsider influences, particularly the union organizers, poses a threat to the current order, and their interactions with the workers reveal a growing undercurrent of resistance."
+        ]
+      },
+      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. *Leonora keeps her eyes down, avoiding drawing any more attention to herself.* I... I must work. *She whispers to Rosa, glancing up briefly.* Per favore, go before he get more mad. *Rosa nods slightly, slipping the union card back into her sleeve.* I understand, Leonora. Be safe. *She moves slowly toward the door, maintaining her composure.*",
       "retrieved_memories": [
-        "Rosa Peretz said: \"*Slips a union card along the edge of the table, glancing at Leonora briefly* I understand, Leonora. We will talk again when it's safer. *Nods to Max, starting to step back* I'll be on my way now, Mr. Bernstein.\"",
-        "Rosa Peretz said: \"*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone.\"",
-        "Leonora Russo said: \"*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero.\"",
-        "Leonora Russo said: \"*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?\"",
-        "Leonora Russo said: \"*Leonora looks anxiously from Rosa to Max, then back to her work* Please, signora, you must go now. I cannot lose this. *Her voice trembles, barely audible* We will talk another time, sì?\""
+        "Rosa Peretz said: \"*Rosa nods slightly, slipping the union card back into her sleeve.* I understand, Leonora. Be safe. *She moves slowly toward the door, maintaining her composure.*\"",
+        "Leonora Russo said: \"*Leonora keeps her eyes down, avoiding drawing any more attention to herself.* I... I must work. *She whispers to Rosa, glancing up briefly.* Per favore, go before he get more mad.\"",
+        "Leonora Russo said: \"*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job.\"",
+        "Rosa Peretz said: \"I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?\"",
+        "Rosa Peretz said: \"*Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done.\""
       ],
-      "utterance": "*Max's eyes remain stern as he watches Rosa retreat, ready to intervene if necessary.* This is a place of work, not for your agitating. Leonora, keep your head down and focus, yes? Stay out of such nonsense."
+      "utterance": "*Max watches Rosa head toward the door, then turns his stern gaze on Leonora.* You, back to work, Leonora. Now. I don't want to see any more of this mischief today."
     }
   ],
   "transcript": [
     {
       "speaker": "Rosa",
-      "utterance": "*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?"
+      "utterance": "*Rosa quietly approaches Leonora, keeping her voice low and her back turned to the aisle.* Excuse me, Leonora, yes? Antonia sends regards. We talked on Elizabeth Street."
     },
     {
       "speaker": "Leonora",
-      "utterance": "*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?"
+      "utterance": "*Leonora glances nervously around, ensuring Max isn't too close.* Antonia, sì. Antonia my friend. What you want?"
     },
     {
       "speaker": "Rosa",
-      "utterance": "*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone."
+      "utterance": "I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?"
     },
     {
       "speaker": "Leonora",
-      "utterance": "*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero."
+      "utterance": "*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job."
     },
     {
       "speaker": "Max",
-      "utterance": "*Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you!"
+      "utterance": "*Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself!"
     },
     {
       "speaker": "Rosa",
-      "utterance": "*Turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm not here to cause trouble. Just leaving a message for Leonora, then I'm on my way. I don't want to interrupt your work more than I have to, nu?"
+      "utterance": "*Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done."
     },
     {
       "speaker": "Max",
-      "utterance": "*Stands tall, crossing his arms, eyes narrowing at Rosa* A message, you say? I know your kind of message all too well. Out with you now, or I'll have no choice but to see you escorted out."
+      "utterance": "*Max gestures emphatically toward the door, his voice sharp.* You think this is a game, Rosa? Out, I said. And don't let me catch you here again!"
     },
     {
       "speaker": "Leonora",
-      "utterance": "*Leonora looks anxiously from Rosa to Max, then back to her work* Please, signora, you must go now. I cannot lose this. *Her voice trembles, barely audible* We will talk another time, sì?"
+      "utterance": "*Leonora keeps her eyes down, avoiding drawing any more attention to herself.* I... I must work. *She whispers to Rosa, glancing up briefly.* Per favore, go before he get more mad."
     },
     {
       "speaker": "Rosa",
-      "utterance": "*Slips a union card along the edge of the table, glancing at Leonora briefly* I understand, Leonora. We will talk again when it's safer. *Nods to Max, starting to step back* I'll be on my way now, Mr. Bernstein."
+      "utterance": "*Rosa nods slightly, slipping the union card back into her sleeve.* I understand, Leonora. Be safe. *She moves slowly toward the door, maintaining her composure.*"
     },
     {
       "speaker": "Max",
-      "utterance": "*Max's eyes remain stern as he watches Rosa retreat, ready to intervene if necessary.* This is a place of work, not for your agitating. Leonora, keep your head down and focus, yes? Stay out of such nonsense."
+      "utterance": "*Max watches Rosa head toward the door, then turns his stern gaze on Leonora.* You, back to work, Leonora. Now. I don't want to see any more of this mischief today."
     }
   ],
   "final_memory_streams": {
@@ -296,7 +330,7 @@
         "content": "My sister Concetta is seventeen. She is still in Palermo with my mother. I have promised her I will bring her here. I count every dollar.",
         "source": "bootstrap",
         "created_turn": -1,
-        "last_accessed_turn": 1,
+        "last_accessed_turn": 3,
         "importance": 6,
         "speaker": null,
         "embedding": "[1536-dim vector]"
@@ -323,7 +357,7 @@
         "content": "In the winter of 1909, there was a great strike — tens of thousands of girls walked out. My cousin Giulia was beaten in the street by men the bosses hired. The strike did not win at Triangle. The girls came back. We do not talk about it here.",
         "source": "bootstrap",
         "created_turn": -1,
-        "last_accessed_turn": 3,
+        "last_accessed_turn": 1,
         "importance": 6,
         "speaker": null,
         "embedding": "[1536-dim vector]"
@@ -365,16 +399,16 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Rosa Peretz said: \"*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?\"",
+        "content": "Rosa Peretz said: \"*Rosa quietly approaches Leonora, keeping her voice low and her back turned to the aisle.* Excuse me, Leonora, yes? Antonia sends regards. We talked on Elizabeth Street.\"",
         "source": "observation",
         "created_turn": 0,
-        "last_accessed_turn": 7,
+        "last_accessed_turn": 3,
         "importance": 7,
         "speaker": "Rosa Peretz",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Rosa Peretz said: \"*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone.\"",
+        "content": "Rosa Peretz said: \"I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?\"",
         "source": "observation",
         "created_turn": 2,
         "last_accessed_turn": 7,
@@ -383,7 +417,7 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Max Bernstein said: \"*Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you!\"",
+        "content": "Max Bernstein said: \"*Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself!\"",
         "source": "observation",
         "created_turn": 4,
         "last_accessed_turn": 7,
@@ -392,25 +426,43 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Rosa Peretz said: \"*Turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm not here to cause trouble. Just leaving a message for Leonora, then I'm on my way. I don't want to interrupt your work more than I have to, nu?\"",
+        "content": "Rosa Peretz said: \"*Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done.\"",
         "source": "observation",
         "created_turn": 5,
         "last_accessed_turn": 7,
-        "importance": 6,
+        "importance": 7,
         "speaker": "Rosa Peretz",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Max Bernstein said: \"*Stands tall, crossing his arms, eyes narrowing at Rosa* A message, you say? I know your kind of message all too well. Out with you now, or I'll have no choice but to see you escorted out.\"",
+        "content": "Max Bernstein said: \"*Max gestures emphatically toward the door, his voice sharp.* You think this is a game, Rosa? Out, I said. And don't let me catch you here again!\"",
         "source": "observation",
         "created_turn": 6,
-        "last_accessed_turn": 7,
+        "last_accessed_turn": 6,
         "importance": 6,
         "speaker": "Max Bernstein",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Rosa Peretz said: \"*Slips a union card along the edge of the table, glancing at Leonora briefly* I understand, Leonora. We will talk again when it's safer. *Nods to Max, starting to step back* I'll be on my way now, Mr. Bernstein.\"",
+        "content": "I am beginning to realize that there is a deep fear of the union among the bosses and a strict enforcement of keeping its influences out.",
+        "source": "reflection",
+        "created_turn": 7,
+        "last_accessed_turn": 7,
+        "importance": 8,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "It is becoming clear to me that many of us girls are living in a fragile situation, where both our safety concerns and our attempts to speak out are met with silence or hostility.",
+        "source": "reflection",
+        "created_turn": 7,
+        "last_accessed_turn": 7,
+        "importance": 8,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*Rosa nods slightly, slipping the union card back into her sleeve.* I understand, Leonora. Be safe. *She moves slowly toward the door, maintaining her composure.*\"",
         "source": "observation",
         "created_turn": 8,
         "last_accessed_turn": 8,
@@ -419,11 +471,11 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Max Bernstein said: \"*Max's eyes remain stern as he watches Rosa retreat, ready to intervene if necessary.* This is a place of work, not for your agitating. Leonora, keep your head down and focus, yes? Stay out of such nonsense.\"",
+        "content": "Max Bernstein said: \"*Max watches Rosa head toward the door, then turns his stern gaze on Leonora.* You, back to work, Leonora. Now. I don't want to see any more of this mischief today.\"",
         "source": "observation",
         "created_turn": 9,
         "last_accessed_turn": 9,
-        "importance": 4,
+        "importance": 5,
         "speaker": "Max Bernstein",
         "embedding": "[1536-dim vector]"
       }
@@ -469,7 +521,7 @@
         "content": "The Washington Place door is locked during shifts. Mr. Harris made that rule. Scraps of good cloth walk out of this building in the pockets of girls who smile and say please. A penny of cloth, times four hundred girls, times six days — that is a business ruined.",
         "source": "bootstrap",
         "created_turn": -1,
-        "last_accessed_turn": 4,
+        "last_accessed_turn": -1,
         "importance": 6,
         "speaker": null,
         "embedding": "[1536-dim vector]"
@@ -478,7 +530,7 @@
         "content": "Rosa Peretz is a troublemaker from 1909. The ILGWU sends her around with cards and speeches. She has been banned from this building by name. If she comes in, I throw her out.",
         "source": "bootstrap",
         "created_turn": -1,
-        "last_accessed_turn": -1,
+        "last_accessed_turn": 6,
         "importance": 6,
         "speaker": null,
         "embedding": "[1536-dim vector]"
@@ -511,25 +563,25 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Rosa Peretz said: \"*Leans in toward Leonora, speaking quietly* Leonora, I've come to speak with you, just for a moment. Antonia said you might be willing to listen. Let me tell you what we can do for each other, nu?\"",
+        "content": "Rosa Peretz said: \"*Rosa quietly approaches Leonora, keeping her voice low and her back turned to the aisle.* Excuse me, Leonora, yes? Antonia sends regards. We talked on Elizabeth Street.\"",
         "source": "observation",
         "created_turn": 0,
-        "last_accessed_turn": 6,
-        "importance": 6,
+        "last_accessed_turn": 0,
+        "importance": 4,
         "speaker": "Rosa Peretz",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Leonora Russo said: \"*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?\"",
+        "content": "Leonora Russo said: \"*Leonora glances nervously around, ensuring Max isn't too close.* Antonia, sì. Antonia my friend. What you want?\"",
         "source": "observation",
         "created_turn": 1,
-        "last_accessed_turn": 9,
-        "importance": 8,
+        "last_accessed_turn": 1,
+        "importance": 3,
         "speaker": "Leonora Russo",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Rosa Peretz said: \"*Gently, barely above a whisper* We want to make sure these doors are open, always. Join us, and we can fight together for safer conditions, shorter hours. I know you are afraid, Leonora, but you are not alone.\"",
+        "content": "Rosa Peretz said: \"I am here to help, like Antonia said. *She slips a union card from her sleeve.* Just ten cents a month to join, and we fight for safer conditions: unlocked doors, shorter hours, sprinklers. Will you sign?\"",
         "source": "observation",
         "created_turn": 2,
         "last_accessed_turn": 9,
@@ -538,7 +590,7 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Leonora Russo said: \"*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero.\"",
+        "content": "Leonora Russo said: \"*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job.\"",
         "source": "observation",
         "created_turn": 3,
         "last_accessed_turn": 9,
@@ -547,30 +599,66 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Rosa Peretz said: \"*Turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm not here to cause trouble. Just leaving a message for Leonora, then I'm on my way. I don't want to interrupt your work more than I have to, nu?\"",
+        "content": "I am beginning to realize that the fear of losing work is keeping many of the girls from taking actions that might improve their conditions.",
+        "source": "reflection",
+        "created_turn": 4,
+        "last_accessed_turn": 4,
+        "importance": 8,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "It is becoming clear to me that maintaining operational secrecy is prioritized, even at the risk of safety, reflecting the pressures to keep the factory running at any cost.",
+        "source": "reflection",
+        "created_turn": 4,
+        "last_accessed_turn": 6,
+        "importance": 8,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*Rosa turns slightly, her eyes meeting Max's with a calm defiance.* I'm leaving, Mr. Bernstein. Just speaking to an old friend. No harm done.\"",
         "source": "observation",
         "created_turn": 5,
-        "last_accessed_turn": 6,
-        "importance": 4,
+        "last_accessed_turn": 9,
+        "importance": 7,
         "speaker": "Rosa Peretz",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Leonora Russo said: \"*Leonora looks anxiously from Rosa to Max, then back to her work* Please, signora, you must go now. I cannot lose this. *Her voice trembles, barely audible* We will talk another time, sì?\"",
+        "content": "Leonora Russo said: \"*Leonora keeps her eyes down, avoiding drawing any more attention to herself.* I... I must work. *She whispers to Rosa, glancing up briefly.* Per favore, go before he get more mad.\"",
         "source": "observation",
         "created_turn": 7,
         "last_accessed_turn": 9,
-        "importance": 6,
+        "importance": 7,
         "speaker": "Leonora Russo",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Rosa Peretz said: \"*Slips a union card along the edge of the table, glancing at Leonora briefly* I understand, Leonora. We will talk again when it's safer. *Nods to Max, starting to step back* I'll be on my way now, Mr. Bernstein.\"",
+        "content": "Rosa Peretz said: \"*Rosa nods slightly, slipping the union card back into her sleeve.* I understand, Leonora. Be safe. *She moves slowly toward the door, maintaining her composure.*\"",
         "source": "observation",
         "created_turn": 8,
         "last_accessed_turn": 9,
         "importance": 7,
         "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "I am beginning to realize that the fear of speaking up or losing their jobs is a powerful tool that keeps many of the workers compliant, despite their desire for better conditions.",
+        "source": "reflection",
+        "created_turn": 9,
+        "last_accessed_turn": 9,
+        "importance": 8,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "It is becoming clear to me that the presence of outsider influences, particularly the union organizers, poses a threat to the current order, and their interactions with the workers reveal a growing undercurrent of resistance.",
+        "source": "reflection",
+        "created_turn": 9,
+        "last_accessed_turn": 9,
+        "importance": 8,
+        "speaker": "Max Bernstein",
         "embedding": "[1536-dim vector]"
       }
     ],
@@ -579,7 +667,7 @@
         "content": "I worked the 9th floor at Triangle for eight months in 1908. I know where the Washington Place door is. I know it is locked during the shift. I have tried the handle.",
         "source": "bootstrap",
         "created_turn": -1,
-        "last_accessed_turn": 0,
+        "last_accessed_turn": 2,
         "importance": 6,
         "speaker": null,
         "embedding": "[1536-dim vector]"
@@ -615,7 +703,7 @@
         "content": "Max Bernstein was a foreman during the 1909 strike. He did not beat any girls himself, but he pointed me out to the men who did. I know his face. He knows mine. I am banned from the building by name.",
         "source": "bootstrap",
         "created_turn": -1,
-        "last_accessed_turn": 5,
+        "last_accessed_turn": 2,
         "importance": 6,
         "speaker": null,
         "embedding": "[1536-dim vector]"
@@ -624,7 +712,7 @@
         "content": "The ILGWU wants contracts with the big shops. The leaders — men — think the Italian girls and the Jewish girls will not sign. I tell them the girls will sign if someone they trust brings the card to them at their table. They do not always listen.",
         "source": "bootstrap",
         "created_turn": -1,
-        "last_accessed_turn": 2,
+        "last_accessed_turn": 0,
         "importance": 6,
         "speaker": null,
         "embedding": "[1536-dim vector]"
@@ -633,7 +721,7 @@
         "content": "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
         "source": "bootstrap",
         "created_turn": -1,
-        "last_accessed_turn": 5,
+        "last_accessed_turn": 8,
         "importance": 6,
         "speaker": null,
         "embedding": "[1536-dim vector]"
@@ -657,25 +745,25 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Leonora Russo said: \"*Glances nervously around, her hands still on the fabric* I... I am afraid to talk, per favore. They watch us, you know? What do you want?\"",
+        "content": "Leonora Russo said: \"*Leonora glances nervously around, ensuring Max isn't too close.* Antonia, sì. Antonia my friend. What you want?\"",
         "source": "observation",
         "created_turn": 1,
+        "last_accessed_turn": 2,
+        "importance": 3,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Leonora Russo said: \"*Leonora hesitates, eyeing the card and then quickly looking around again.* Ten cents... too much. *She shakes her head slightly, her voice barely above a whisper.* I cannot lose my job.\"",
+        "source": "observation",
+        "created_turn": 3,
         "last_accessed_turn": 8,
         "importance": 8,
         "speaker": "Leonora Russo",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Leonora Russo said: \"*Pauses, then looks down at her work, whispering* I have mia famiglia to think about. If they see me talking, I have no job, capisci? But... the doors, they are never open, questo è vero.\"",
-        "source": "observation",
-        "created_turn": 3,
-        "last_accessed_turn": 8,
-        "importance": 7,
-        "speaker": "Leonora Russo",
-        "embedding": "[1536-dim vector]"
-      },
-      {
-        "content": "Max Bernstein said: \"*Approaches the table with a stern expression, noticing Rosa* Miss Peretz! You are not welcome here, you know that. Leave at once before I call someone to remove you!\"",
+        "content": "Max Bernstein said: \"*Max notices Rosa and begins moving toward the two women, his face tightening with recognition and irritation.* Rosa Peretz! You got no business here. Out, now, before I have you thrown out myself!\"",
         "source": "observation",
         "created_turn": 4,
         "last_accessed_turn": 8,
@@ -684,25 +772,43 @@
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Max Bernstein said: \"*Stands tall, crossing his arms, eyes narrowing at Rosa* A message, you say? I know your kind of message all too well. Out with you now, or I'll have no choice but to see you escorted out.\"",
+        "content": "I am beginning to realize that fear and financial insecurity among the workers are significant barriers to organizing, even for those who might otherwise support our efforts.",
+        "source": "reflection",
+        "created_turn": 5,
+        "last_accessed_turn": 5,
+        "importance": 8,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "It is becoming clear to me that individuals like Max Bernstein serve as formidable obstacles to our movement, using their authority and influence to intimidate and suppress those who seek change.",
+        "source": "reflection",
+        "created_turn": 5,
+        "last_accessed_turn": 5,
+        "importance": 8,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Max Bernstein said: \"*Max gestures emphatically toward the door, his voice sharp.* You think this is a game, Rosa? Out, I said. And don't let me catch you here again!\"",
         "source": "observation",
         "created_turn": 6,
         "last_accessed_turn": 8,
-        "importance": 8,
+        "importance": 7,
         "speaker": "Max Bernstein",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Leonora Russo said: \"*Leonora looks anxiously from Rosa to Max, then back to her work* Please, signora, you must go now. I cannot lose this. *Her voice trembles, barely audible* We will talk another time, sì?\"",
+        "content": "Leonora Russo said: \"*Leonora keeps her eyes down, avoiding drawing any more attention to herself.* I... I must work. *She whispers to Rosa, glancing up briefly.* Per favore, go before he get more mad.\"",
         "source": "observation",
         "created_turn": 7,
         "last_accessed_turn": 8,
-        "importance": 8,
+        "importance": 7,
         "speaker": "Leonora Russo",
         "embedding": "[1536-dim vector]"
       },
       {
-        "content": "Max Bernstein said: \"*Max's eyes remain stern as he watches Rosa retreat, ready to intervene if necessary.* This is a place of work, not for your agitating. Leonora, keep your head down and focus, yes? Stay out of such nonsense.\"",
+        "content": "Max Bernstein said: \"*Max watches Rosa head toward the door, then turns his stern gaze on Leonora.* You, back to work, Leonora. Now. I don't want to see any more of this mischief today.\"",
         "source": "observation",
         "created_turn": 9,
         "last_accessed_turn": 9,
