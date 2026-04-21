@@ -30,6 +30,8 @@ This repository is the complete submission for the EDUC_5919 course project and 
 ```
 .
 ├── README.md                  — this file
+├── LICENSE                    — MIT license
+├── .gitignore                 — files git should not track (venv, caches, secrets, scratch)
 ├── assignment.md              — the EDUC_5919 assignment brief
 ├── simulation_plan.md         — the design doc (world, agents, scene, learning objective)
 ├── CLAUDE.md                  — guidance for working on this repo with Claude Code
