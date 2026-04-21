@@ -6,7 +6,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 EDUC_5919 course project implementing a historical generative agent simulation of the Triangle Shirtwaist Factory (NYC, March 25, 1911). Three LLM-powered agents — a garment worker, a factory supervisor/partial owner, and a union organizer — interact in a historically constrained scene to make systemic labor dynamics visible to learners.
 
-See `simulation_plan.md` for the design (historical context, agent identities, learning objective, key interaction) and `README.md` for the architecture walkthrough and adaptation guide.
+See `simulation_plan.md` for the design (historical context, agent identities, learning objective, key interaction), `README.md` for the architecture walkthrough and adaptation guide, and `assignment.md` for the grading rubric and submission requirements.
+
+Published at <https://github.com/baker-jr-john/educ5919-triangle-simulation>. Licensed MIT.
+
+### Submission scope
+Per `assignment.md` §Submission, the professor wants only:
+- `report.pdf` (the report)
+- the three `logs/run_2026042*.json` files (the simulation logs)
+
+Source code is **not** part of the submission — it lives in the public repo, which Appendix A of the report links to.
 
 ## Commands
 
