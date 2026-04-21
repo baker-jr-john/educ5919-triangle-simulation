@@ -2,14 +2,30 @@
 
 Three agents (garment worker, supervisor/partial owner, ILGWU organizer) converge
 in the 9th-floor cutting room at 4:30 PM on March 25, 1911. Each turn is a separate
-OpenAI chat-completion call; the system prompt carries the agent's identity, memories,
-and constraints, and the user message carries the running conversation transcript.
+OpenAI chat-completion call; the system prompt carries the agent's identity and
+retrieved memories, and the user message carries the running conversation transcript.
 
-The identity -> prompt pipeline follows Stanford Town (Park et al., 2023):
-the "identity stable set" (ISS) string and the iterative-conversation template
-at reverie/backend_server/persona/prompt_template/v3_ChatGPT/iterative_convo_v1.txt.
-Embedding-based memory retrieval is dropped in favor of static bootstrap memories;
-this suffices for a single fixed scene.
+Agent architecture follows Stanford Town (Park et al., 2023):
+
+  Identity (ISS) -----+
+                      |
+  Bootstrap memories -+--> AssociativeMemory  --retrieve(query, k)--> top-k
+                      |                                                   |
+  Observations -------+                                                   v
+  (each utterance                                                    System prompt
+   other agents hear)                                                     |
+                                                                          v
+                                                                   chat.completions
+
+Each agent owns an AssociativeMemory (memory.py). Bootstrap memories are seeded
+at load; every utterance heard by an agent becomes an observation added to their
+stream. On each turn, before generating the next utterance, the agent retrieves
+top-k memories scored by recency + relevance + importance, and only those go
+into the system prompt (not the full bootstrap list).
+
+See memory.py for the retrieval scoring implementation and its correspondences
+to Stanford Town's `cognitive_modules/retrieve.py` and
+`memory_structures/associative_memory.py`.
 """
 
 from __future__ import annotations
@@ -23,10 +39,13 @@ from pathlib import Path
 
 from openai import OpenAI
 
+from memory import AssociativeMemory
+
 
 MODEL = "gpt-4o"
 AGENTS_DIR = Path(__file__).parent / "agents"
 LOGS_DIR = Path(__file__).parent / "logs"
+RETRIEVAL_K = 5  # memories pulled into the prompt per turn
 
 SCENE_CONTEXT = """\
 It is Saturday, March 25, 1911, at 4:30 PM, in New York City.
@@ -88,8 +107,12 @@ def get_str_iss(agent: Agent) -> str:
     )
 
 
-def build_system_prompt(agent: Agent, scene_context: str) -> str:
-    memories = "\n".join(f"- {m}" for m in agent.bootstrap_memories)
+def build_system_prompt(
+    agent: Agent,
+    scene_context: str,
+    retrieved_memories: list[str],
+) -> str:
+    memories = "\n".join(f"- {m}" for m in retrieved_memories)
     constraints = "\n".join(f"- {c}" for c in agent.constraints)
     return f"""You are roleplaying a historical character in a classroom simulation designed to help students see how social, economic, and cultural forces shape individual choices. Stay in character. Do not narrate as a modern observer. Do not break the fourth wall.
 
@@ -99,7 +122,7 @@ def build_system_prompt(agent: Agent, scene_context: str) -> str:
 # You are {agent.name}.
 {get_str_iss(agent)}
 
-# What is in your head (memories, knowledge, fears)
+# What is in your head right now (the memories most relevant to this moment)
 {memories}
 
 # Constraints on your behavior
@@ -115,11 +138,29 @@ def format_history(history: list[tuple[str, str]]) -> str:
     return "\n".join(f"{speaker}: {utterance}" for speaker, utterance in history)
 
 
-def agent_turn(
+def build_retrieval_query(
     agent: Agent,
     history: list[tuple[str, str]],
-    client: OpenAI,
 ) -> str:
+    """Form a retrieval query from the agent's current goal plus the last couple
+    of utterances they've heard. This concatenation is a simpler alternative to
+    Stanford Town's multi-focal-point retrieval in new_retrieve()."""
+    recent = " ".join(u for _, u in history[-2:])
+    return f"{agent.currently} {recent}".strip()
+
+
+def agent_turn(
+    agent: Agent,
+    memory: AssociativeMemory,
+    history: list[tuple[str, str]],
+    turn_num: int,
+    client: OpenAI,
+) -> tuple[str, list[str]]:
+    """Generate one agent turn with retrieval. Returns (utterance, retrieved_memory_strings)."""
+    query = build_retrieval_query(agent, history)
+    retrieved_nodes = memory.retrieve(query, current_turn=turn_num, k=RETRIEVAL_K)
+    retrieved_strs = [n.content for n in retrieved_nodes]
+
     user_message = (
         f"Conversation so far on the 9th-floor cutting room:\n\n"
         f"{format_history(history)}\n\n"
@@ -130,50 +171,106 @@ def agent_turn(
         model=MODEL,
         max_tokens=300,
         messages=[
-            {"role": "system", "content": build_system_prompt(agent, SCENE_CONTEXT)},
+            {
+                "role": "system",
+                "content": build_system_prompt(agent, SCENE_CONTEXT, retrieved_strs),
+            },
             {"role": "user", "content": user_message},
         ],
     )
-    return response.choices[0].message.content.strip()
+    return response.choices[0].message.content.strip(), retrieved_strs
 
 
 def run_interaction(
     agents: dict[str, Agent],
+    memories: dict[str, AssociativeMemory],
     turn_order: list[str],
     client: OpenAI,
-) -> list[tuple[str, str]]:
-    """Run the scripted turn order and return the full transcript."""
+) -> tuple[list[tuple[str, str]], list[dict]]:
+    """Run the scripted turn order. Return (transcript, per_turn_log).
+
+    per_turn_log[i] contains the query, the retrieved memory contents, and the
+    utterance produced — enough to audit what the retrieval module did.
+    """
     history: list[tuple[str, str]] = []
+    per_turn: list[dict] = []
+
     print("=" * 72)
     print(" TRIANGLE SHIRTWAIST FACTORY — 9th FLOOR CUTTING ROOM")
     print(" Saturday, March 25, 1911 — 4:30 PM")
     print("=" * 72)
     print()
-    for agent_key in turn_order:
+
+    for turn_num, agent_key in enumerate(turn_order):
         agent = agents[agent_key]
-        utterance = agent_turn(agent, history, client)
+        memory = memories[agent_key]
+
+        query = build_retrieval_query(agent, history)
+        utterance, retrieved = agent_turn(
+            agent, memory, history, turn_num, client
+        )
         history.append((agent.first_name, utterance))
+
+        # Every OTHER agent in the room hears the utterance and records it as
+        # an observation in their own memory stream, with importance rated by
+        # the model. The speaker does not record their own speech — the
+        # conversation history passed to the prompt already contains it.
+        for other_key, other_memory in memories.items():
+            if other_key == agent_key:
+                continue
+            observation = f'{agent.name} said: "{utterance}"'
+            other_memory.add_observation(
+                content=observation,
+                speaker=agent.name,
+                turn=turn_num,
+                rate_with_model=True,
+            )
+
+        per_turn.append(
+            {
+                "turn": turn_num,
+                "speaker": agent.first_name,
+                "retrieval_query": query,
+                "retrieved_memories": retrieved,
+                "utterance": utterance,
+            }
+        )
+
         print(f"{agent.first_name}: {utterance}")
         print()
-    return history
+
+    return history, per_turn
 
 
 def save_log(
     history: list[tuple[str, str]],
+    per_turn: list[dict],
     agents: dict[str, Agent],
+    memories: dict[str, AssociativeMemory],
     turn_order: list[str],
 ) -> Path:
-    """Write a timestamped JSON log of the run for submission and analysis."""
+    """Write a timestamped JSON log of the run for submission and analysis.
+
+    The log captures: scene, turn order, per-agent identity, per-turn retrieval
+    (query + top-k memory contents), transcript, and each agent's final memory
+    stream. Embeddings are elided to keep the file human-readable.
+    """
     LOGS_DIR.mkdir(exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     log_path = LOGS_DIR / f"run_{ts}.json"
     payload = {
         "timestamp": ts,
         "model": MODEL,
+        "retrieval_k": RETRIEVAL_K,
         "scene_context": SCENE_CONTEXT,
         "turn_order": turn_order,
         "agents": {key: asdict(a) for key, a in agents.items()},
+        "per_turn": per_turn,
         "transcript": [{"speaker": s, "utterance": u} for s, u in history],
+        "final_memory_streams": {
+            key: memory.dump(include_embeddings=False)
+            for key, memory in memories.items()
+        },
     }
     with open(log_path, "w") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
@@ -212,8 +309,17 @@ def main() -> int:
     ]
 
     client = OpenAI()
-    history = run_interaction(agents, turn_order, client)
-    save_log(history, agents, turn_order)
+
+    # Build one AssociativeMemory per agent; seed with bootstrap memories.
+    print("[seeding agent memory streams with bootstrap memories…]")
+    memories = {key: AssociativeMemory(client, a.name) for key, a in agents.items()}
+    for key, a in agents.items():
+        memories[key].seed_bootstrap(a.bootstrap_memories)
+        print(f"  {key}: {len(memories[key].nodes)} bootstrap nodes embedded")
+    print()
+
+    history, per_turn = run_interaction(agents, memories, turn_order, client)
+    save_log(history, per_turn, agents, memories, turn_order)
     return 0
 
 

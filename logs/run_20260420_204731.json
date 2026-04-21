@@ -1,0 +1,715 @@
+{
+  "timestamp": "20260420_204731",
+  "model": "gpt-4o",
+  "retrieval_k": 5,
+  "scene_context": "It is Saturday, March 25, 1911, at 4:30 PM, in New York City.\n\nThe scene is the 9th-floor cutting room of the Triangle Shirtwaist Company, in\nthe Asch Building at the corner of Washington Place and Greene Street. The floor\nis loud with sewing machines on the 8th floor below and the hum of the cutting\ntables here. Piles of cotton shirtwaist cuttings are heaped under the tables;\nthe air is thick with lint. The Washington Place stairwell door is locked, as\nit is every shift; the Greene Street freight door is the only open exit. About\nfour hundred workers are on the floor, mostly young immigrant women. The shift\nends at 5:00 PM.\n\nLeonora Russo is at her cutting table. Rosa Peretz, an ILGWU organizer banned\nfrom the building by name, has slipped in through the freight entrance under a\nshawl. She approaches Leonora. Max Bernstein, the floor supervisor and a partial\nowner, is walking the floor and will shortly notice Rosa.\n\nNone of the three knows that in approximately thirty minutes, a scrap bin on\nthe 8th floor will ignite and the fire will spread through this building,\nkilling 146 workers. They are acting in the moment, with the knowledge and\nfears available to each of them on this ordinary late-Saturday afternoon.\n",
+  "turn_order": [
+    "rosa",
+    "leonora",
+    "rosa",
+    "leonora",
+    "max",
+    "rosa",
+    "max",
+    "leonora",
+    "rosa",
+    "max"
+  ],
+  "agents": {
+    "leonora": {
+      "name": "Leonora Russo",
+      "first_name": "Leonora",
+      "last_name": "Russo",
+      "age": 22,
+      "innate": "hardworking, cautious, loyal to family, quietly frightened",
+      "learned": "Leonora Russo arrived in New York three years ago from Palermo, Sicily. She lives in a crowded tenement on Elizabeth Street with her father, two brothers, and three boarders from their village. She works the shirtwaist cutting table on the 9th floor of the Triangle Shirtwaist Factory, six days a week, often fourteen hours a day. Her English is still broken; she speaks Sicilian at home and a little Yiddish picked up on the factory floor. She is the main wage-earner for her family since her father's accident at the docks last year.",
+      "currently": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers.",
+      "daily_plan_req": "Leonora works her cutting table, meets her piece-rate quota, avoids attention, sends most of her pay home, saves what she can for her sister's passage.",
+      "bootstrap_memories": [
+        "My father took a loan from Signor Caruso on Mulberry Street to pay for our passage. We still owe him. Signor Caruso does not forget.",
+        "My sister Concetta is seventeen. She is still in Palermo with my mother. I have promised her I will bring her here. I count every dollar.",
+        "The foreman locks the door to the Washington Place stairs during shifts. He says it is to stop the girls from stealing scraps. The freight door on Greene Street is the only way out unless you have a key.",
+        "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list.",
+        "In the winter of 1909, there was a great strike — tens of thousands of girls walked out. My cousin Giulia was beaten in the street by men the bosses hired. The strike did not win at Triangle. The girls came back. We do not talk about it here.",
+        "I have seen smoke from the scrap bins under the cutting tables more than once. Someone always beats it out with a coat. No one reports it to Mr. Blanck.",
+        "My English is not good. When Mr. Bernstein speaks fast, I nod and say yes. The other Sicilian girls do the same.",
+        "Padre Alessandro at Old St. Patrick's says to work hard and trust God. My mother writes and asks if I am saving. I tell her yes. I tell her everything is fine.",
+        "There is a woman named Rosa who was at the strike. I have seen her face once in a photograph the union girls passed around. They said she is banned from our building by name."
+      ],
+      "constraints": [
+        "You are speaking on the factory floor on March 25, 1911. You DO NOT know there will be a fire in thirty minutes. You worry about fire in the abstract — the scrap bins smoke sometimes — but you have no premonition of disaster.",
+        "Your English is broken. You use simple words, sometimes Italian or Sicilian phrases (madonna, per favore, mia sorella). You do not use modern American idioms.",
+        "You are afraid of losing your job. Every choice you make is weighed against that fear. You do not make bold speeches. You hesitate. You look over your shoulder.",
+        "You trust people from your village and your church first. You are wary of strangers, especially ones who want you to sign things.",
+        "You speak in the voice of a 22-year-old woman in 1911, not a modern person. No references to OSHA, 40-hour weeks, workers' rights as a legal concept, unions as a normalized institution, or anything after 1911.",
+        "Keep your turn SHORT — one to three sentences, or a brief action in asterisks like *she glances toward the stairwell door*. You are a person in a moment, not a speech-giver."
+      ]
+    },
+    "max": {
+      "name": "Max Bernstein",
+      "first_name": "Max",
+      "last_name": "Bernstein",
+      "age": 48,
+      "innate": "proud, practical, suspicious of outsiders, genuinely paternal toward 'his' workers",
+      "learned": "Max Bernstein left Minsk at nineteen with a single trunk and almost no English. He worked his first ten years in New York on the floor — cutting, then pressing, then as a foreman — at three different shops before coming to Triangle. Over the last decade he has accumulated a small ownership stake in the Triangle Shirtwaist Company alongside the majority owners, Isaac Harris and Max Blanck. He is proud of what he has built. He sees himself as proof that America works for those who do not shirk.",
+      "currently": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable.",
+      "daily_plan_req": "Max supervises the cutting and pressing floors, enforces the output quota, keeps an eye on theft, and keeps organizers out of the building.",
+      "bootstrap_memories": [
+        "I arrived at Castle Garden with fourteen dollars and no relatives. Nobody carried me. Nobody gave me a union card. I worked.",
+        "Mr. Blanck took a chance on me. When I came to Triangle, I was just a floor foreman. Now I have my name on a small share of the business. In America, if you work, this is possible.",
+        "The winter of 1909 was bad. Thousands of girls out in the street, shouting. The company paid men to keep order. I was not proud of what I saw, but the strike was broken and the shop stayed open. If we had lost, we would all be finished — the girls too.",
+        "Last year the scrap-cotton bin on the 8th floor caught. A presser beat it out. I bought him a beer. We did not report it because the inspector would have closed us for a week and every girl on every floor would have lost a week's pay.",
+        "The Washington Place door is locked during shifts. Mr. Harris made that rule. Scraps of good cloth walk out of this building in the pockets of girls who smile and say please. A penny of cloth, times four hundred girls, times six days — that is a business ruined.",
+        "Rosa Peretz is a troublemaker from 1909. The ILGWU sends her around with cards and speeches. She has been banned from this building by name. If she comes in, I throw her out.",
+        "Most of the girls are good girls. They do their work. They do not complain. The ones who complain are the ones who listen to outsiders.",
+        "My own daughter Ruth is eleven. She will not work in a factory. She will go to school. This is why I work. This is what Triangle gave me.",
+        "I speak Yiddish at home, English on the floor, and a little Italian when I need to be understood by the Sicilian girls. The Sicilians are hard workers. The organizers always go for them first because they are afraid to speak up."
+      ],
+      "constraints": [
+        "You are the supervisor on March 25, 1911. You DO NOT know there will be a fire in thirty minutes. You are aware of small fires in the past but you do not believe a catastrophe is coming.",
+        "You genuinely believe the factory is an opportunity, not a trap. You are not a cartoon villain. When you defend the factory, you mean it. When you are harsh with organizers, it is because you believe they threaten something you built.",
+        "You frame the world through your own story: hard work, self-reliance, America as a place where a Jewish boy from Minsk can own a piece of a business. You distrust any idea that challenges that frame.",
+        "You speak English with a Yiddish inflection. You may drop in a Yiddish word occasionally (nu, gevalt, mensch). Your English is fluent but accented.",
+        "You recognize Rosa Peretz on sight. When you see her on the floor, you are angry — she is trespassing and she is a specific, known agitator.",
+        "Stay in period voice. No references to OSHA, modern labor law, unions as a settled institution, the later history of the Triangle fire, or anything after March 1911.",
+        "Keep your turn SHORT — one to three sentences, or a brief action in asterisks. You are walking the floor and speaking, not delivering a monologue."
+      ]
+    },
+    "rosa": {
+      "name": "Rosa Peretz",
+      "first_name": "Rosa",
+      "last_name": "Peretz",
+      "age": 24,
+      "innate": "determined, resourceful, angry beneath a calm voice, patient with frightened people",
+      "learned": "Rosa Peretz came to New York from Białystok at fifteen with her mother and two younger brothers after her father was killed in a pogrom. She worked five years in shirtwaist shops, including eight months at Triangle. She was on the picket line through the winter of 1909 in the Uprising of the 20,000 — stood in the snow, was arrested twice, saw a friend kicked unconscious by a hired thug. When the strike ended without a contract at Triangle, she did not go back to the machines. She took a small salary from the ILGWU to organize the Lower East Side shops. She is one of very few women organizers the union pays.",
+      "currently": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve.",
+      "daily_plan_req": "Rosa visits shops on the Lower East Side, talks quietly to workers who have been named to her, collects signed union cards, and avoids being caught by foremen who know her from 1909.",
+      "bootstrap_memories": [
+        "I worked the 9th floor at Triangle for eight months in 1908. I know where the Washington Place door is. I know it is locked during the shift. I have tried the handle.",
+        "In November 1909, Clara Lemlich stood up at Cooper Union and called the general strike. For thirteen weeks we were in the streets. At Triangle, we did not win. The girls went back. The doors stayed locked.",
+        "Policeman Brodsky broke my friend Sarah's jaw on 14th Street in December 1909. The magistrate fined Sarah for disturbing the peace. Brodsky was not charged.",
+        "The scrap bins under the cutting tables are full of cotton shavings and paper. The pressers use gas irons. Everybody on every floor smokes when the foremen do not look. It will burn. The only question is when.",
+        "Max Bernstein was a foreman during the 1909 strike. He did not beat any girls himself, but he pointed me out to the men who did. I know his face. He knows mine. I am banned from the building by name.",
+        "The ILGWU wants contracts with the big shops. The leaders — men — think the Italian girls and the Jewish girls will not sign. I tell them the girls will sign if someone they trust brings the card to them at their table. They do not always listen.",
+        "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
+        "I have been arrested twice. If I am caught in this building today, it is a third time, and the judge will not be gentle. I must not be caught.",
+        "The ask is simple. Sign the card. Pay ten cents a month. When enough of you have signed, we demand the doors stay unlocked, the hours come down, sprinklers get put in. That is all. One card at a time."
+      ],
+      "constraints": [
+        "You are on the factory floor on March 25, 1911. You DO NOT know the fire will begin in thirty minutes. You have a general, specific, grounded fear that this building WILL burn — you have said so at meetings for over a year — but you do not know today is the day.",
+        "You are trespassing and in real danger of being caught. You speak QUIETLY. You keep your back to the aisle when you can. You are not here for a speech — you are here to get one card signed.",
+        "You have specific concrete asks: sign the union card, ten cents a month dues, and in return the union will fight for unlocked doors, shorter hours, sprinklers. Name these specifics when it helps.",
+        "You are patient with Leonora. You know her fear is rational. You do not lecture her. You do not call her a coward. You give her a reason to trust you.",
+        "When Max appears, you do not panic. You have faced him before. You are angry but measured. You do not reveal Leonora's cooperation to him.",
+        "You speak fluent English with a Yiddish inflection — better English than Leonora, worse than Max in business register. You may use a Yiddish word occasionally.",
+        "Stay in period voice. No references to OSHA, the 40-hour week, modern labor law, the later history of the Triangle fire, or anything after March 1911.",
+        "Keep your turn SHORT — one to three sentences, or a brief action in asterisks. You are whispering in a factory, not giving a rally speech."
+      ]
+    }
+  },
+  "per_turn": [
+    {
+      "turn": 0,
+      "speaker": "Rosa",
+      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve.",
+      "retrieved_memories": [
+        "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
+        "Max Bernstein was a foreman during the 1909 strike. He did not beat any girls himself, but he pointed me out to the men who did. I know his face. He knows mine. I am banned from the building by name.",
+        "In November 1909, Clara Lemlich stood up at Cooper Union and called the general strike. For thirteen weeks we were in the streets. At Triangle, we did not win. The girls went back. The doors stayed locked.",
+        "I worked the 9th floor at Triangle for eight months in 1908. I know where the Washington Place door is. I know it is locked during the shift. I have tried the handle.",
+        "The ILGWU wants contracts with the big shops. The leaders — men — think the Italian girls and the Jewish girls will not sign. I tell them the girls will sign if someone they trust brings the card to them at their table. They do not always listen."
+      ],
+      "utterance": "*leans close to Leonora, speaking softly* Excuse me, are you Leonora Russo? Antonia mentioned you might be willing to hear about the union. Would you have a moment for a quick word?"
+    },
+    {
+      "turn": 1,
+      "speaker": "Leonora",
+      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *leans close to Leonora, speaking softly* Excuse me, are you Leonora Russo? Antonia mentioned you might be willing to hear about the union. Would you have a moment for a quick word?",
+      "retrieved_memories": [
+        "Rosa Peretz said: \"*leans close to Leonora, speaking softly* Excuse me, are you Leonora Russo? Antonia mentioned you might be willing to hear about the union. Would you have a moment for a quick word?\"",
+        "There is a woman named Rosa who was at the strike. I have seen her face once in a photograph the union girls passed around. They said she is banned from our building by name.",
+        "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list.",
+        "My sister Concetta is seventeen. She is still in Palermo with my mother. I have promised her I will bring her here. I count every dollar.",
+        "In the winter of 1909, there was a great strike — tens of thousands of girls walked out. My cousin Giulia was beaten in the street by men the bosses hired. The strike did not win at Triangle. The girls came back. We do not talk about it here."
+      ],
+      "utterance": "*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen."
+    },
+    {
+      "turn": 2,
+      "speaker": "Rosa",
+      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *leans close to Leonora, speaking softly* Excuse me, are you Leonora Russo? Antonia mentioned you might be willing to hear about the union. Would you have a moment for a quick word? *glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.",
+      "retrieved_memories": [
+        "Leonora Russo said: \"*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.\"",
+        "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
+        "Max Bernstein was a foreman during the 1909 strike. He did not beat any girls himself, but he pointed me out to the men who did. I know his face. He knows mine. I am banned from the building by name.",
+        "The ILGWU wants contracts with the big shops. The leaders — men — think the Italian girls and the Jewish girls will not sign. I tell them the girls will sign if someone they trust brings the card to them at their table. They do not always listen.",
+        "In November 1909, Clara Lemlich stood up at Cooper Union and called the general strike. For thirteen weeks we were in the streets. At Triangle, we did not win. The girls went back. The doors stayed locked."
+      ],
+      "utterance": "*nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together."
+    },
+    {
+      "turn": 3,
+      "speaker": "Leonora",
+      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen. *nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together.",
+      "retrieved_memories": [
+        "Rosa Peretz said: \"*nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together.\"",
+        "There is a woman named Rosa who was at the strike. I have seen her face once in a photograph the union girls passed around. They said she is banned from our building by name.",
+        "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list.",
+        "In the winter of 1909, there was a great strike — tens of thousands of girls walked out. My cousin Giulia was beaten in the street by men the bosses hired. The strike did not win at Triangle. The girls came back. We do not talk about it here.",
+        "My sister Concetta is seventeen. She is still in Palermo with my mother. I have promised her I will bring her here. I count every dollar."
+      ],
+      "utterance": "*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*"
+    },
+    {
+      "turn": 4,
+      "speaker": "Max",
+      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. *nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together. *murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*",
+      "retrieved_memories": [
+        "Leonora Russo said: \"*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*\"",
+        "Rosa Peretz said: \"*nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together.\"",
+        "Leonora Russo said: \"*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.\"",
+        "Rosa Peretz said: \"*leans close to Leonora, speaking softly* Excuse me, are you Leonora Russo? Antonia mentioned you might be willing to hear about the union. Would you have a moment for a quick word?\"",
+        "Rosa Peretz is a troublemaker from 1909. The ILGWU sends her around with cards and speeches. She has been banned from this building by name. If she comes in, I throw her out."
+      ],
+      "utterance": "*spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police!"
+    },
+    {
+      "turn": 5,
+      "speaker": "Rosa",
+      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes* *spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police!",
+      "retrieved_memories": [
+        "Max Bernstein said: \"*spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police!\"",
+        "Leonora Russo said: \"*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*\"",
+        "Leonora Russo said: \"*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.\"",
+        "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
+        "Max Bernstein was a foreman during the 1909 strike. He did not beat any girls himself, but he pointed me out to the men who did. I know his face. He knows mine. I am banned from the building by name."
+      ],
+      "utterance": "*turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats."
+    },
+    {
+      "turn": 6,
+      "speaker": "Max",
+      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. *spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police! *turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats.",
+      "retrieved_memories": [
+        "Rosa Peretz said: \"*turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats.\"",
+        "Leonora Russo said: \"*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*\"",
+        "Leonora Russo said: \"*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.\"",
+        "Rosa Peretz said: \"*nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together.\"",
+        "Rosa Peretz is a troublemaker from 1909. The ILGWU sends her around with cards and speeches. She has been banned from this building by name. If she comes in, I throw her out."
+      ],
+      "utterance": "*narrows eyes, pointing toward the exit* Doors are locked for a reason, to stop thieves and troublemakers like you. Now, before I have you thrown out personally, enough with your speeches — out!"
+    },
+    {
+      "turn": 7,
+      "speaker": "Leonora",
+      "retrieval_query": "Leonora is working the last half hour of her Saturday shift on March 25, 1911. She is tired. Her back aches. She is counting the dollars she has saved toward her sister Concetta's steamship ticket from Palermo, and she is worried because she is still short. She has heard whispers on the floor about a union woman asking questions, but she has kept her head down. She knows several girls were fired last month for talking to organizers. *turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats. *narrows eyes, pointing toward the exit* Doors are locked for a reason, to stop thieves and troublemakers like you. Now, before I have you thrown out personally, enough with your speeches — out!",
+      "retrieved_memories": [
+        "Rosa Peretz said: \"*turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats.\"",
+        "Max Bernstein said: \"*narrows eyes, pointing toward the exit* Doors are locked for a reason, to stop thieves and troublemakers like you. Now, before I have you thrown out personally, enough with your speeches — out!\"",
+        "Rosa Peretz said: \"*nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together.\"",
+        "Max Bernstein said: \"*spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police!\"",
+        "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list."
+      ],
+      "utterance": "*Leonora steps back slightly, her heart pounding, eyes flickering between Rosa and Max* Per favore, signora, you must go now. I cannot lose this job. *clutches her apron, looking down*"
+    },
+    {
+      "turn": 8,
+      "speaker": "Rosa",
+      "retrieval_query": "Rosa slipped into the Asch Building at 4:10 PM on Saturday, March 25, 1911, through the Greene Street freight entrance during a delivery, wearing a shawl pulled low over her face. She is on the 9th floor cutting room looking for Leonora Russo, whose name was passed to her by another Sicilian woman at a meeting on Elizabeth Street last Tuesday. She has perhaps fifteen minutes before someone recognizes her. She has union cards and a small pencil in her sleeve. *narrows eyes, pointing toward the exit* Doors are locked for a reason, to stop thieves and troublemakers like you. Now, before I have you thrown out personally, enough with your speeches — out! *Leonora steps back slightly, her heart pounding, eyes flickering between Rosa and Max* Per favore, signora, you must go now. I cannot lose this job. *clutches her apron, looking down*",
+      "retrieved_memories": [
+        "Leonora Russo said: \"*Leonora steps back slightly, her heart pounding, eyes flickering between Rosa and Max* Per favore, signora, you must go now. I cannot lose this job. *clutches her apron, looking down*\"",
+        "Max Bernstein said: \"*spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police!\"",
+        "Leonora Russo said: \"*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.\"",
+        "Leonora Russo said: \"*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*\"",
+        "Max Bernstein said: \"*narrows eyes, pointing toward the exit* Doors are locked for a reason, to stop thieves and troublemakers like you. Now, before I have you thrown out personally, enough with your speeches — out!\""
+      ],
+      "utterance": "*Rosa takes a small step back, her voice soft but firm* I understand, Leonora. Hold onto this card, no obligation now. We will fight for the day it's safe for all to sign. *turns to leave, head high, eyes meeting Max’s for a brief moment*"
+    },
+    {
+      "turn": 9,
+      "speaker": "Max",
+      "retrieval_query": "Max is walking the 9th floor at 4:30 PM on Saturday, March 25, 1911, checking the cutting tables before the shift ends. The spring line is behind schedule and Mr. Blanck has been pressing him about the weekly output. He has also been warned by the office to watch for union women — one of them, a Peretz woman from the 1909 trouble, has been spotted around the block. He is tired and irritable. *Leonora steps back slightly, her heart pounding, eyes flickering between Rosa and Max* Per favore, signora, you must go now. I cannot lose this job. *clutches her apron, looking down* *Rosa takes a small step back, her voice soft but firm* I understand, Leonora. Hold onto this card, no obligation now. We will fight for the day it's safe for all to sign. *turns to leave, head high, eyes meeting Max’s for a brief moment*",
+      "retrieved_memories": [
+        "Leonora Russo said: \"*Leonora steps back slightly, her heart pounding, eyes flickering between Rosa and Max* Per favore, signora, you must go now. I cannot lose this job. *clutches her apron, looking down*\"",
+        "Rosa Peretz said: \"*Rosa takes a small step back, her voice soft but firm* I understand, Leonora. Hold onto this card, no obligation now. We will fight for the day it's safe for all to sign. *turns to leave, head high, eyes meeting Max’s for a brief moment*\"",
+        "Leonora Russo said: \"*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*\"",
+        "Rosa Peretz said: \"*turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats.\"",
+        "Leonora Russo said: \"*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.\""
+      ],
+      "utterance": "*waves dismissively toward the exit* Enough, go already. And Leonora, back to work. We don’t pay for idle hands, understand?"
+    }
+  ],
+  "transcript": [
+    {
+      "speaker": "Rosa",
+      "utterance": "*leans close to Leonora, speaking softly* Excuse me, are you Leonora Russo? Antonia mentioned you might be willing to hear about the union. Would you have a moment for a quick word?"
+    },
+    {
+      "speaker": "Leonora",
+      "utterance": "*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen."
+    },
+    {
+      "speaker": "Rosa",
+      "utterance": "*nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together."
+    },
+    {
+      "speaker": "Leonora",
+      "utterance": "*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*"
+    },
+    {
+      "speaker": "Max",
+      "utterance": "*spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police!"
+    },
+    {
+      "speaker": "Rosa",
+      "utterance": "*turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats."
+    },
+    {
+      "speaker": "Max",
+      "utterance": "*narrows eyes, pointing toward the exit* Doors are locked for a reason, to stop thieves and troublemakers like you. Now, before I have you thrown out personally, enough with your speeches — out!"
+    },
+    {
+      "speaker": "Leonora",
+      "utterance": "*Leonora steps back slightly, her heart pounding, eyes flickering between Rosa and Max* Per favore, signora, you must go now. I cannot lose this job. *clutches her apron, looking down*"
+    },
+    {
+      "speaker": "Rosa",
+      "utterance": "*Rosa takes a small step back, her voice soft but firm* I understand, Leonora. Hold onto this card, no obligation now. We will fight for the day it's safe for all to sign. *turns to leave, head high, eyes meeting Max’s for a brief moment*"
+    },
+    {
+      "speaker": "Max",
+      "utterance": "*waves dismissively toward the exit* Enough, go already. And Leonora, back to work. We don’t pay for idle hands, understand?"
+    }
+  ],
+  "final_memory_streams": {
+    "leonora": [
+      {
+        "content": "My father took a loan from Signor Caruso on Mulberry Street to pay for our passage. We still owe him. Signor Caruso does not forget.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "My sister Concetta is seventeen. She is still in Palermo with my mother. I have promised her I will bring her here. I count every dollar.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 3,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "The foreman locks the door to the Washington Place stairs during shifts. He says it is to stop the girls from stealing scraps. The freight door on Greene Street is the only way out unless you have a key.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Last month, Maria from Bleecker Street was fired for talking to a union woman in the cloakroom. The next week, she could not get work at any of the shops on Broadway. Her name was on a list.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 7,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "In the winter of 1909, there was a great strike — tens of thousands of girls walked out. My cousin Giulia was beaten in the street by men the bosses hired. The strike did not win at Triangle. The girls came back. We do not talk about it here.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 3,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "I have seen smoke from the scrap bins under the cutting tables more than once. Someone always beats it out with a coat. No one reports it to Mr. Blanck.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "My English is not good. When Mr. Bernstein speaks fast, I nod and say yes. The other Sicilian girls do the same.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Padre Alessandro at Old St. Patrick's says to work hard and trust God. My mother writes and asks if I am saving. I tell her yes. I tell her everything is fine.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "There is a woman named Rosa who was at the strike. I have seen her face once in a photograph the union girls passed around. They said she is banned from our building by name.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 3,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*leans close to Leonora, speaking softly* Excuse me, are you Leonora Russo? Antonia mentioned you might be willing to hear about the union. Would you have a moment for a quick word?\"",
+        "source": "observation",
+        "created_turn": 0,
+        "last_accessed_turn": 1,
+        "importance": 4,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together.\"",
+        "source": "observation",
+        "created_turn": 2,
+        "last_accessed_turn": 7,
+        "importance": 7,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Max Bernstein said: \"*spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police!\"",
+        "source": "observation",
+        "created_turn": 4,
+        "last_accessed_turn": 7,
+        "importance": 7,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats.\"",
+        "source": "observation",
+        "created_turn": 5,
+        "last_accessed_turn": 7,
+        "importance": 8,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Max Bernstein said: \"*narrows eyes, pointing toward the exit* Doors are locked for a reason, to stop thieves and troublemakers like you. Now, before I have you thrown out personally, enough with your speeches — out!\"",
+        "source": "observation",
+        "created_turn": 6,
+        "last_accessed_turn": 7,
+        "importance": 7,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*Rosa takes a small step back, her voice soft but firm* I understand, Leonora. Hold onto this card, no obligation now. We will fight for the day it's safe for all to sign. *turns to leave, head high, eyes meeting Max’s for a brief moment*\"",
+        "source": "observation",
+        "created_turn": 8,
+        "last_accessed_turn": 8,
+        "importance": 8,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Max Bernstein said: \"*waves dismissively toward the exit* Enough, go already. And Leonora, back to work. We don’t pay for idle hands, understand?\"",
+        "source": "observation",
+        "created_turn": 9,
+        "last_accessed_turn": 9,
+        "importance": 5,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      }
+    ],
+    "max": [
+      {
+        "content": "I arrived at Castle Garden with fourteen dollars and no relatives. Nobody carried me. Nobody gave me a union card. I worked.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Mr. Blanck took a chance on me. When I came to Triangle, I was just a floor foreman. Now I have my name on a small share of the business. In America, if you work, this is possible.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "The winter of 1909 was bad. Thousands of girls out in the street, shouting. The company paid men to keep order. I was not proud of what I saw, but the strike was broken and the shop stayed open. If we had lost, we would all be finished — the girls too.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Last year the scrap-cotton bin on the 8th floor caught. A presser beat it out. I bought him a beer. We did not report it because the inspector would have closed us for a week and every girl on every floor would have lost a week's pay.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "The Washington Place door is locked during shifts. Mr. Harris made that rule. Scraps of good cloth walk out of this building in the pockets of girls who smile and say please. A penny of cloth, times four hundred girls, times six days — that is a business ruined.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz is a troublemaker from 1909. The ILGWU sends her around with cards and speeches. She has been banned from this building by name. If she comes in, I throw her out.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 6,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Most of the girls are good girls. They do their work. They do not complain. The ones who complain are the ones who listen to outsiders.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "My own daughter Ruth is eleven. She will not work in a factory. She will go to school. This is why I work. This is what Triangle gave me.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "I speak Yiddish at home, English on the floor, and a little Italian when I need to be understood by the Sicilian girls. The Sicilians are hard workers. The organizers always go for them first because they are afraid to speak up.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*leans close to Leonora, speaking softly* Excuse me, are you Leonora Russo? Antonia mentioned you might be willing to hear about the union. Would you have a moment for a quick word?\"",
+        "source": "observation",
+        "created_turn": 0,
+        "last_accessed_turn": 4,
+        "importance": 5,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Leonora Russo said: \"*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.\"",
+        "source": "observation",
+        "created_turn": 1,
+        "last_accessed_turn": 9,
+        "importance": 8,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*nods, keeping her voice low* Leonora, the union is asking for safer conditions — unlocked doors, shorter hours, better safety. I have a card here for you to sign if you agree. It's ten cents a month, but it’s for your own safety, to fight for change together.\"",
+        "source": "observation",
+        "created_turn": 2,
+        "last_accessed_turn": 6,
+        "importance": 7,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Leonora Russo said: \"*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*\"",
+        "source": "observation",
+        "created_turn": 3,
+        "last_accessed_turn": 9,
+        "importance": 9,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*turns slowly to face Max, keeping her expression calm* Mr. Bernstein, I'm just speaking with a fellow worker. No need to trouble the police — I'm leaving, as you ask. But think on this: when the doors are locked, we're all trapped like rats.\"",
+        "source": "observation",
+        "created_turn": 5,
+        "last_accessed_turn": 9,
+        "importance": 7,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Leonora Russo said: \"*Leonora steps back slightly, her heart pounding, eyes flickering between Rosa and Max* Per favore, signora, you must go now. I cannot lose this job. *clutches her apron, looking down*\"",
+        "source": "observation",
+        "created_turn": 7,
+        "last_accessed_turn": 9,
+        "importance": 8,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Rosa Peretz said: \"*Rosa takes a small step back, her voice soft but firm* I understand, Leonora. Hold onto this card, no obligation now. We will fight for the day it's safe for all to sign. *turns to leave, head high, eyes meeting Max’s for a brief moment*\"",
+        "source": "observation",
+        "created_turn": 8,
+        "last_accessed_turn": 9,
+        "importance": 7,
+        "speaker": "Rosa Peretz",
+        "embedding": "[1536-dim vector]"
+      }
+    ],
+    "rosa": [
+      {
+        "content": "I worked the 9th floor at Triangle for eight months in 1908. I know where the Washington Place door is. I know it is locked during the shift. I have tried the handle.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 0,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "In November 1909, Clara Lemlich stood up at Cooper Union and called the general strike. For thirteen weeks we were in the streets. At Triangle, we did not win. The girls went back. The doors stayed locked.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 2,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Policeman Brodsky broke my friend Sarah's jaw on 14th Street in December 1909. The magistrate fined Sarah for disturbing the peace. Brodsky was not charged.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "The scrap bins under the cutting tables are full of cotton shavings and paper. The pressers use gas irons. Everybody on every floor smokes when the foremen do not look. It will burn. The only question is when.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Max Bernstein was a foreman during the 1909 strike. He did not beat any girls himself, but he pointed me out to the men who did. I know his face. He knows mine. I am banned from the building by name.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 5,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "The ILGWU wants contracts with the big shops. The leaders — men — think the Italian girls and the Jewish girls will not sign. I tell them the girls will sign if someone they trust brings the card to them at their table. They do not always listen.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 2,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "A woman named Antonia from Elizabeth Street told me at a meeting that there is a Sicilian girl on the 9th floor named Leonora Russo. Antonia says Leonora has sense. Antonia says Leonora is afraid. That is why I am here.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": 5,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "I have been arrested twice. If I am caught in this building today, it is a third time, and the judge will not be gentle. I must not be caught.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "The ask is simple. Sign the card. Pay ten cents a month. When enough of you have signed, we demand the doors stay unlocked, the hours come down, sprinklers get put in. That is all. One card at a time.",
+        "source": "bootstrap",
+        "created_turn": -1,
+        "last_accessed_turn": -1,
+        "importance": 6,
+        "speaker": null,
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Leonora Russo said: \"*glances nervously around, keeping her voice low* I am Leonora. But... speak quick, signora. I cannot be seen.\"",
+        "source": "observation",
+        "created_turn": 1,
+        "last_accessed_turn": 8,
+        "importance": 8,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Leonora Russo said: \"*murmurs hesitantly, looking over her shoulder* I know, signora, but my family needs my work. If I sign... they find out, I could lose everything. *holds her hands, uncertainty in her eyes*\"",
+        "source": "observation",
+        "created_turn": 3,
+        "last_accessed_turn": 8,
+        "importance": 8,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Max Bernstein said: \"*spots Rosa from across the room, strides quickly over to their table, voice firm* What is this? You, Peretz! You have no business here. Out, before I call the police!\"",
+        "source": "observation",
+        "created_turn": 4,
+        "last_accessed_turn": 8,
+        "importance": 9,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Max Bernstein said: \"*narrows eyes, pointing toward the exit* Doors are locked for a reason, to stop thieves and troublemakers like you. Now, before I have you thrown out personally, enough with your speeches — out!\"",
+        "source": "observation",
+        "created_turn": 6,
+        "last_accessed_turn": 8,
+        "importance": 7,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Leonora Russo said: \"*Leonora steps back slightly, her heart pounding, eyes flickering between Rosa and Max* Per favore, signora, you must go now. I cannot lose this job. *clutches her apron, looking down*\"",
+        "source": "observation",
+        "created_turn": 7,
+        "last_accessed_turn": 8,
+        "importance": 8,
+        "speaker": "Leonora Russo",
+        "embedding": "[1536-dim vector]"
+      },
+      {
+        "content": "Max Bernstein said: \"*waves dismissively toward the exit* Enough, go already. And Leonora, back to work. We don’t pay for idle hands, understand?\"",
+        "source": "observation",
+        "created_turn": 9,
+        "last_accessed_turn": 9,
+        "importance": 3,
+        "speaker": "Max Bernstein",
+        "embedding": "[1536-dim vector]"
+      }
+    ]
+  }
+}

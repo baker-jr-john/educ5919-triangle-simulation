@@ -35,7 +35,8 @@ This repository is the complete submission for the EDUC_5919 course project and 
 ├── CLAUDE.md                  — guidance for working on this repo with Claude Code
 │
 ├── requirements.txt           — openai, jupyter
-├── simulation.py              — CLI entry point
+├── simulation.py              — CLI entry point (turn loop + scene + logging)
+├── memory.py                  — AssociativeMemory: retrieval scoring by recency + relevance + importance
 ├── simulation.ipynb           — Jupyter notebook version (same logic, narrated)
 │
 ├── agents/
@@ -67,7 +68,7 @@ pip install -r requirements.txt
 
 ### 2. Get an OpenAI API key
 
-Create one at <https://platform.openai.com/api-keys>. The default model is `gpt-4o`; a full 10-turn run costs roughly $0.05 USD.
+Create one at <https://platform.openai.com/api-keys>. The default models are `gpt-4o` for agent turns, `text-embedding-3-small` for memory embeddings, and `gpt-4o-mini` for scoring observation importance. A full 10-turn run costs roughly $0.10 USD.
 
 ### 3. Run the simulation
 
@@ -114,11 +115,16 @@ Each agent JSON mirrors Stanford Town's `scratch.json` layering — `innate` / `
 ### Turn loop
 
 ```
-for agent in scripted turn order:
+seed each agent's AssociativeMemory with their bootstrap_memories (all embedded)
+
+for turn_num, agent in enumerate(scripted turn order):
+    query = agent.currently + " " + (last two utterances heard)
+    retrieved = agent.memory.retrieve(query, current_turn=turn_num, k=5)
+
     system_prompt = (
         scene_context
         + "You are <Name>." + ISS(agent)
-        + "What is in your head:" + bootstrap_memories
+        + "What is in your head right now:" + retrieved         # <-- top-k only, not all bootstrap
         + "Constraints on your behavior:" + constraints
         + output instructions
     )
@@ -128,38 +134,78 @@ for agent in scripted turn order:
         messages=[{"role": "system", ...}, {"role": "user", ...}],
     )
     history.append((agent.first_name, utterance))
+
+    # every other agent hears this and writes it into their own memory,
+    # with an importance score rated by gpt-4o-mini
+    for other in other_agents:
+        other.memory.add_observation(f'{agent.name} said: "{utterance}"', ...)
 ```
 
-### Key functions in `simulation.py`
+### Memory and retrieval (`memory.py`)
 
-| Function | Purpose |
-|----------|---------|
-| `load_agent(path)` | Deserialize an agent JSON into an `Agent` dataclass |
-| `get_str_iss(agent)` | Build the Identity Stable Set string — direct port of Stanford Town's `Scratch.get_str_iss()` |
-| `build_system_prompt(agent, scene_context)` | Assemble the full system prompt for one turn |
-| `agent_turn(agent, history, client)` | One turn = one OpenAI API call; return the utterance |
-| `run_interaction(agents, turn_order, client)` | Orchestrate the scripted turn sequence; print transcript |
-| `save_log(history, agents, turn_order)` | Write `logs/run_<timestamp>.json` |
+Each agent owns an `AssociativeMemory`. Nodes come from two sources:
+
+- **Bootstrap memories** — seeded at load, embedded with `text-embedding-3-small`, given a default importance of 6/10.
+- **Observations** — every utterance the other two agents produce; embedded at write time; importance rated 1–10 by a `gpt-4o-mini` call. The speaker does not self-observe (the conversation history already covers that).
+
+On each turn, before the `gpt-4o` call, the speaking agent's memory is scored against a retrieval query. Following Park et al. (2023) §A.1.1:
+
+```
+score(node) = W_RECENCY   * recency_norm(node)
+            + W_RELEVANCE * relevance_norm(node)
+            + W_IMPORTANCE * importance_norm(node)
+
+recency    = 0.995 ^ (current_turn - last_accessed_turn)
+relevance  = cosine(embed(query), node.embedding)
+importance = node.importance / 10
+```
+
+Each of the three components is min-max normalized across the candidate set before weighting. Defaults mirror Stanford Town's `scratch.json` (all three weights = 1.0, recency decay = 0.995). The top-k nodes (default k=5) have their `last_accessed_turn` bumped — so memories that get retrieved frequently decay more slowly.
+
+### Key functions
+
+| File / Function | Purpose |
+|---|---|
+| `simulation.py :: load_agent(path)` | Deserialize an agent JSON into an `Agent` dataclass |
+| `simulation.py :: get_str_iss(agent)` | Identity Stable Set string — port of Stanford Town's `Scratch.get_str_iss()` |
+| `simulation.py :: build_retrieval_query(agent, history)` | `agent.currently + last two utterances` → one query string |
+| `simulation.py :: build_system_prompt(agent, scene, retrieved_memories)` | Assemble the full per-turn system prompt |
+| `simulation.py :: agent_turn(agent, memory, history, turn_num, client)` | Retrieve → `chat.completions` → return `(utterance, retrieved_strs)` |
+| `simulation.py :: run_interaction(agents, memories, turn_order, client)` | Orchestrate turns; after each utterance, record observations in every other agent's memory |
+| `simulation.py :: save_log(...)` | Write `logs/run_<timestamp>.json` including per-turn retrieval audit and final memory streams |
+| `memory.py :: AssociativeMemory.seed_bootstrap(list)` | Embed and insert each bootstrap memory as a node |
+| `memory.py :: AssociativeMemory.add_observation(content, speaker, turn)` | Rate importance, embed, append an observation node |
+| `memory.py :: AssociativeMemory.retrieve(query, current_turn, k)` | Score + sort + return top-k; bump `last_accessed_turn` |
+| `memory.py :: rate_importance(content, agent)` | One `gpt-4o-mini` call; return an integer 1–10 |
 
 ### Prompt architecture — why it's built this way
 
-The three key Stanford Town patterns we reuse are:
+The four key Stanford Town patterns we reuse are:
 
 1. **Identity stable set (ISS).** A single string containing `Name / Age / Innate traits / Learned traits / Currently / Daily plan / Current date`. See `simulation.py:get_str_iss()` and Stanford Town's `reverie/backend_server/persona/memory_structures/scratch.py:382-414`.
 
 2. **Iterative conversation prompt structure.** Persona ISS → retrieved memory → past context → current location → current context → conversation so far → "what should X say next?". See Stanford Town's `reverie/backend_server/persona/prompt_template/v3_ChatGPT/iterative_convo_v1.txt`.
 
-3. **Agent JSON shape.** Mirrors Stanford Town's `scratch.json` but restricted to identity fields (no pathfinding, no maze state, no hourly scheduling).
+3. **Associative memory with weighted retrieval.** Nodes + embeddings + the `recency + relevance + importance` scoring rule from Park et al. (2023) §A.1.1. See `memory.py` and Stanford Town's `reverie/backend_server/persona/memory_structures/associative_memory.py` + `reverie/backend_server/persona/cognitive_modules/retrieve.py`.
 
-What we **dropped** from Stanford Town:
+4. **Agent JSON shape.** Mirrors Stanford Town's `scratch.json` but restricted to identity fields (no pathfinding, no maze state, no hourly scheduling).
 
-- Embedding-based memory retrieval (`AssociativeMemory`)
+What we **simplified** relative to Stanford Town:
+
+- **Single-field nodes.** Stanford Town splits each node into `(subject, predicate, object) + description`; our nodes are single `content` strings. The decomposition is used by their reflect module — we don't reflect.
+- **Embeddings only, no keyword fallback.** Stanford Town also scores by keyword-strength overlap as a secondary signal. We use embeddings only.
+- **Single retrieval query.** Stanford Town's `new_retrieve` takes a list of focal points and unions the results; we concatenate `currently + last two utterances` into one query.
+- **No self-observation.** The conversation history already contains each agent's own utterances, so the speaker does not add a node when they finish a turn.
+
+What we **dropped** entirely:
+
 - The Django frontend / Phaser 3 game world
-- The `perceive` → `retrieve` → `plan` → `reflect` → `execute` pipeline
+- Full `perceive` → `retrieve` → `plan` → `reflect` → `execute` pipeline (we keep only retrieve-in-service-of-converse)
 - Hourly schedule generation and action decomposition
+- Reflection (building higher-level insights from recent memories)
 - The maze / A* pathfinding
 
-All of that infrastructure exists in Stanford Town to support a 25-agent open-world simulation running for several in-game days. For a single-scene 3-agent conversation, most of it is unnecessary — bootstrap memories go directly into the system prompt, and the turn order is scripted.
+All of that infrastructure exists in Stanford Town to support a 25-agent open-world simulation running for several in-game days. For a single-scene 3-agent conversation, most of it is unnecessary — scripted turn order, one room, ten turns.
 
 ---
 
@@ -229,6 +275,8 @@ Each run writes a `logs/run_<timestamp>.json`. Read the transcripts looking for:
 - **Anachronisms or historical failures** (these become your plausibility evaluation)
 - **Patterns that repeat across runs** (these show the structural forces doing their work)
 
+Also skim the `per_turn` retrieval audit: did the retrieval module pull memories that actually fit the moment, or did it anchor on bootstrap memories that an agent would have no reason to be thinking about right now? If retrieval looks wrong, the most likely causes are (a) bootstrap memories are too generic to differentiate by cosine distance, or (b) the retrieval query is too narrow; widen it by including more of the recent history.
+
 ### Step 6. Write the report
 
 See `report.md` for the structure used here. The eight sections from `assignment.md` each get their own heading; the Behavior Documentation section cites specific lines from specific JSON logs (`run_<ts>.json / turn N`) as evidence.
@@ -259,11 +307,11 @@ That was the full dependency on Stanford Town — reading three files.
 
 **Doing this in prose first, before touching code, was the single most useful step in the project.** If the scene is not clear in prose, no amount of good prompt engineering will rescue it.
 
-### Phase 3 — Build the simulation
+### Phase 3 — Build the simulation (first pass)
 
 1. Write `requirements.txt` (originally `anthropic`, later swapped to `openai`)
 2. Write three agent JSONs (Leonora, Max, Rosa) with 9 memories and 6–8 constraints each
-3. Write `simulation.py` with the 5 functions in the architecture table above
+3. Write `simulation.py` with the core turn functions
 4. Write `simulation.ipynb` as a self-contained notebook version with narration between cells
 5. Smoke-test: confirm agents load, prompts assemble, ISS strings render correctly — before making any API call
 
@@ -271,13 +319,28 @@ That was the full dependency on Stanford Town — reading three files.
 
 The live run was first attempted with Claude (claude-sonnet-4-6) but swapped to OpenAI (gpt-4o) to reuse existing course credits. The swap touched three files: `requirements.txt`, `simulation.py`, `simulation.ipynb` — about 20 lines of changes. No agent JSONs changed. This is one of the virtues of the layered design: the model swap is a plumbing change.
 
-Three runs were executed, producing the three JSON logs in `logs/`.
+Three runs were executed, producing the initial JSON logs in `logs/`.
 
-### Phase 5 — Analyze and write the report
+### Phase 5 — Retrofit: add associative memory with retrieval
+
+After the first submission to the professor, her feedback was that the simulation was **missing infrastructure from Stanford Town** — specifically, the memory stream and retrieval module. The first-pass version stuffed every bootstrap memory into every prompt, which is not how Park et al.'s generative agents actually work.
+
+This phase addressed that by adding `memory.py`:
+
+1. Port `AssociativeMemory` from Stanford Town's `memory_structures/associative_memory.py`, with single-field `content` nodes (no `(subject, predicate, object)` decomposition — unnecessary without reflection).
+2. Port the retrieval scoring from `cognitive_modules/retrieve.py`: min-max normalized `recency + relevance + importance`, weights all 1.0, recency decay 0.995.
+3. Embed every memory node with `text-embedding-3-small` (a cheap, modern replacement for Stanford Town's OpenAI ada embeddings).
+4. For every observation written into a memory stream, rate its importance 1–10 with a `gpt-4o-mini` call — the "poignancy score" from Park et al. §A.1.1.
+5. Rewire `simulation.py` and `simulation.ipynb` so that each turn first retrieves the top-k memories for the current speaker, injects *only those* into the system prompt, and then writes the resulting utterance into every other agent's memory stream as a new observation.
+6. Extend `save_log()` to include a `per_turn` retrieval audit (query + top-k memory contents) and each agent's `final_memory_streams`, so graders can see what was retrieved when.
+
+The reasoning for choosing faithful retrieval over a cheaper keyword-overlap fallback: faithfulness to Stanford Town *was the point* of the retrofit.
+
+### Phase 6 — Analyze and write the report
 
 Five specific behavior observations were extracted from the logs — each cited to a run and turn number. Patterns across runs were identified (power revealed through action, Leonora defers rather than refuses, Rosa's specificity holds under interruption). The report's most important argument, in §6, is about the **limits** of the simulation as a learning tool.
 
-### Phase 6 — Convert to PDF
+### Phase 7 — Convert to PDF
 
 `report.md` is the authoritative source. `report.pdf` was produced via `pandoc report.md -o report.pdf --pdf-engine=weasyprint`. Either file can be regenerated; the PDF is the submission artifact.
 
@@ -297,16 +360,39 @@ Each log contains:
 {
   "timestamp": "20260420_195823",
   "model": "gpt-4o",
+  "retrieval_k": 5,
   "scene_context": "It is Saturday, March 25, 1911...",
   "turn_order": ["rosa", "leonora", "rosa", ...],
   "agents": { "leonora": {...}, "max": {...}, "rosa": {...} },
+  "per_turn": [
+    {
+      "turn": 0,
+      "speaker": "Rosa",
+      "retrieval_query": "Get Leonora's signature on a union card...",
+      "retrieved_memories": ["I was in Union Square...", "The fire escape...", ...],
+      "utterance": "Leonora, keep cutting. Don't look up..."
+    },
+    ...
+  ],
   "transcript": [
     {"speaker": "Rosa", "utterance": "..."},
     {"speaker": "Leonora", "utterance": "..."},
     ...
-  ]
+  ],
+  "final_memory_streams": {
+    "leonora": [
+      { "content": "I came from Palermo...", "source": "bootstrap", "importance": 6, ... },
+      { "content": "Rosa Peretz said: \"...\"", "source": "observation", "speaker": "Rosa Peretz", "importance": 7, ... },
+      ...
+    ],
+    "max": [...],
+    "rosa": [...]
+  }
 }
 ```
+
+- **`per_turn`** is the **retrieval audit**: for each turn, the query that was built and the top-k memory contents that were actually injected into that turn's system prompt. This lets graders verify the retrieval module did what it claims.
+- **`final_memory_streams`** is each agent's full post-scene memory: bootstrap seeds + every utterance the other two agents made during the run, each with its model-rated importance score. Embeddings are elided as `"[1536-dim vector]"` to keep the file human-readable.
 
 You can rerun any turn offline by loading the agent JSONs, replaying the history up to turn N, and calling `agent_turn()` on the N+1 agent. No state is hidden.
 
@@ -314,13 +400,16 @@ You can rerun any turn offline by loading the agent JSONs, replaying the history
 
 ## Stanford Town reference map
 
-For classmates who want to trace back to the source, these are the three files from Stanford Town that this project actually depends on (read, not run):
+For classmates who want to trace back to the source, these are the files from Stanford Town that this project actually depends on (read, not run):
 
 - **Agent identity format:** `Stanford_Town/repo/environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/personas/Isabella Rodriguez/bootstrap_memory/scratch.json`
 - **ISS string implementation:** `Stanford_Town/repo/reverie/backend_server/persona/memory_structures/scratch.py:382-414` (the `get_str_iss()` method)
 - **Conversation prompt template:** `Stanford_Town/repo/reverie/backend_server/persona/prompt_template/v3_ChatGPT/iterative_convo_v1.txt`
+- **Associative memory class:** `Stanford_Town/repo/reverie/backend_server/persona/memory_structures/associative_memory.py` (node + stream + add-observation structure)
+- **Retrieval scoring:** `Stanford_Town/repo/reverie/backend_server/persona/cognitive_modules/retrieve.py` (the `recency + relevance + importance` weighted sum)
+- **Poignancy rating prompt:** `Stanford_Town/repo/reverie/backend_server/persona/prompt_template/run_gpt_prompt.py :: generate_poig_score()`
 
-If you want to see the full cognitive loop that we **did not** port, start at `Stanford_Town/repo/reverie/backend_server/persona/persona.py` and follow `Persona.move()` through `perceive.py` → `retrieve.py` → `plan.py` → `execute.py` → `converse.py` → `reflect.py`. Impressive, but overkill for a single-scene conversation.
+If you want to see the rest of the cognitive loop that we **did not** port, start at `Stanford_Town/repo/reverie/backend_server/persona/persona.py` and follow `Persona.move()` through `perceive.py` → `plan.py` → `execute.py` → `converse.py` → `reflect.py`. We port `retrieve` but skip the others. Impressive, but overkill for a single-scene conversation.
 
 ---
 
