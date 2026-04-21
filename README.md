@@ -351,7 +351,7 @@ The live run was first attempted with Claude (claude-sonnet-4-6) but swapped to 
 
 Three runs were executed, producing the initial JSON logs in `logs/`.
 
-### Phase 5 — Retrofit: add associative memory with retrieval
+### Phase 5a — Retrofit: add associative memory with retrieval
 
 After the first submission to the professor, her feedback was that the simulation was **missing infrastructure from Stanford Town** — specifically, the memory stream and retrieval module. The first-pass version stuffed every bootstrap memory into every prompt, which is not how Park et al.'s generative agents actually work.
 
